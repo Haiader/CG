@@ -1,22 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Haiad\\source\\repos\\Karbala\\",
+  "WorkspaceRootPath": "D:\\Karbala\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|c:\\users\\haiad\\source\\repos\\karbala\\karbala\\form_dshboard.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|solutionrelative:karbala\\form_dshboard.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|c:\\users\\haiad\\source\\repos\\karbala\\karbala\\form_dshboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|solutionrelative:karbala\\form_dshboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|c:\\users\\haiad\\source\\repos\\karbala\\karbala\\form_dshboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|d:\\karbala\\karbala\\form_dshboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|solutionrelative:karbala\\form_dshboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|C:\\Users\\Haiad\\source\\repos\\Karbala\\karbala\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|solutionrelative:karbala\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|d:\\karbala\\karbala\\form_task2.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|solutionrelative:karbala\\form_task2.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|d:\\karbala\\karbala\\form_task2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|solutionrelative:karbala\\form_task2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|d:\\karbala\\karbala\\form_task2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|solutionrelative:karbala\\form_task2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|d:\\karbala\\karbala\\form_dshboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|solutionrelative:karbala\\form_dshboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|d:\\karbala\\karbala\\advanced_task1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{42B2F683-6D9D-6D96-D174-79F65D3F88CE}|Karbala\\Karbala.csproj|solutionrelative:karbala\\advanced_task1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,52 +50,77 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Form_Dshboard.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\Form_Dshboard.cs",
-              "RelativeDocumentMoniker": "Karbala\\Form_Dshboard.cs",
-              "ToolTip": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\Form_Dshboard.cs [Design]",
-              "RelativeToolTip": "Karbala\\Form_Dshboard.cs [Design]",
+              "DocumentIndex": 3,
+              "Title": "Form_Task2.cs",
+              "DocumentMoniker": "D:\\Karbala\\Karbala\\Form_Task2.cs",
+              "RelativeDocumentMoniker": "Karbala\\Form_Task2.cs",
+              "ToolTip": "D:\\Karbala\\Karbala\\Form_Task2.cs",
+              "RelativeToolTip": "Karbala\\Form_Task2.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-11T19:24:49.896Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2026-02-13T17:33:20.18Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form_Task2.Designer.cs",
+              "DocumentMoniker": "D:\\Karbala\\Karbala\\Form_Task2.Designer.cs",
+              "RelativeDocumentMoniker": "Karbala\\Form_Task2.Designer.cs",
+              "ToolTip": "D:\\Karbala\\Karbala\\Form_Task2.Designer.cs",
+              "RelativeToolTip": "Karbala\\Form_Task2.Designer.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T17:32:45.014Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Form_Dshboard.cs",
-              "DocumentMoniker": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\Form_Dshboard.cs",
-              "RelativeDocumentMoniker": "Karbala\\Form_Dshboard.cs",
-              "ToolTip": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\Form_Dshboard.cs",
-              "RelativeToolTip": "Karbala\\Form_Dshboard.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAwwD0AAAAZAAAAAAAAAA==",
+              "Title": "Form_Task2.cs [Design]",
+              "DocumentMoniker": "D:\\Karbala\\Karbala\\Form_Task2.cs",
+              "RelativeDocumentMoniker": "Karbala\\Form_Task2.cs",
+              "ToolTip": "D:\\Karbala\\Karbala\\Form_Task2.cs [Design]",
+              "RelativeToolTip": "Karbala\\Form_Task2.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-11T19:24:48.94Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-13T17:32:43.075Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Form_Dshboard.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\Form_Dshboard.Designer.cs",
-              "RelativeDocumentMoniker": "Karbala\\Form_Dshboard.Designer.cs",
-              "ToolTip": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\Form_Dshboard.Designer.cs*",
-              "RelativeToolTip": "Karbala\\Form_Dshboard.Designer.cs*",
-              "ViewState": "AgIAAFkAAAAAAAAAAAASwGQAAAABAAAAAAAAAA==",
+              "Title": "Form_Dshboard.cs",
+              "DocumentMoniker": "D:\\Karbala\\Karbala\\Form_Dshboard.cs",
+              "RelativeDocumentMoniker": "Karbala\\Form_Dshboard.cs",
+              "ToolTip": "D:\\Karbala\\Karbala\\Form_Dshboard.cs",
+              "RelativeToolTip": "Karbala\\Form_Dshboard.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAuwEgAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-11T19:24:47.243Z",
+              "WhenOpened": "2026-02-13T17:29:28.45Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\Form1.cs",
-              "RelativeDocumentMoniker": "Karbala\\Form1.cs",
-              "ToolTip": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\Form1.cs [Design]",
-              "RelativeToolTip": "Karbala\\Form1.cs [Design]",
+              "DocumentIndex": 4,
+              "Title": "Form_Dshboard.cs [Design]",
+              "DocumentMoniker": "D:\\Karbala\\Karbala\\Form_Dshboard.cs",
+              "RelativeDocumentMoniker": "Karbala\\Form_Dshboard.cs",
+              "ToolTip": "D:\\Karbala\\Karbala\\Form_Dshboard.cs [Design]",
+              "RelativeToolTip": "Karbala\\Form_Dshboard.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-11T13:05:27.242Z",
+              "WhenOpened": "2026-02-13T17:29:15.953Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Advanced_Task1.cs [Design]",
+              "DocumentMoniker": "D:\\Karbala\\Karbala\\Advanced_Task1.cs",
+              "RelativeDocumentMoniker": "Karbala\\Advanced_Task1.cs",
+              "ToolTip": "D:\\Karbala\\Karbala\\Advanced_Task1.cs [Design]",
+              "RelativeToolTip": "Karbala\\Advanced_Task1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T15:11:16.124Z",
               "EditorCaption": " [Design]"
             }
           ]

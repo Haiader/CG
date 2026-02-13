@@ -33,6 +33,8 @@
             TSM_Tasks_Average = new ToolStripMenuItem();
             TSM_Tasks_Average_Task1 = new ToolStripMenuItem();
             TSM_Tasks_Advanced = new ToolStripMenuItem();
+            toolStripMenuItem2 = new ToolStripMenuItem();
+            task2ToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -54,7 +56,7 @@
             // 
             // TSM_Tasks_Average
             // 
-            TSM_Tasks_Average.DropDownItems.AddRange(new ToolStripItem[] { TSM_Tasks_Average_Task1 });
+            TSM_Tasks_Average.DropDownItems.AddRange(new ToolStripItem[] { TSM_Tasks_Average_Task1, task2ToolStripMenuItem });
             TSM_Tasks_Average.Name = "TSM_Tasks_Average";
             TSM_Tasks_Average.Size = new Size(180, 22);
             TSM_Tasks_Average.Text = "Average";
@@ -68,9 +70,24 @@
             // 
             // TSM_Tasks_Advanced
             // 
+            TSM_Tasks_Advanced.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem2 });
             TSM_Tasks_Advanced.Name = "TSM_Tasks_Advanced";
             TSM_Tasks_Advanced.Size = new Size(180, 22);
             TSM_Tasks_Advanced.Text = "Advanced";
+            // 
+            // toolStripMenuItem2
+            // 
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            toolStripMenuItem2.Size = new Size(105, 22);
+            toolStripMenuItem2.Text = "Task 1";
+            toolStripMenuItem2.Click += toolStripMenuItem2_Click;
+            // 
+            // task2ToolStripMenuItem
+            // 
+            task2ToolStripMenuItem.Name = "task2ToolStripMenuItem";
+            task2ToolStripMenuItem.Size = new Size(180, 22);
+            task2ToolStripMenuItem.Text = "Task 2";
+            task2ToolStripMenuItem.Click += task2ToolStripMenuItem_Click;
             // 
             // Form_Dashboard
             // 
@@ -92,10 +109,10 @@
 
         private MenuStrip menuStrip1;
         private ToolStripMenuItem tasksToolStripMenuItem;
-        private ToolStripMenuItem task1ToolStripMenuItem;
-        private ToolStripMenuItem task1ToolStripMenuItem1;
         private ToolStripMenuItem TSM_Tasks_Average;
         private ToolStripMenuItem TSM_Tasks_Average_Task1;
         private ToolStripMenuItem TSM_Tasks_Advanced;
+        private ToolStripMenuItem toolStripMenuItem2;
+        private ToolStripMenuItem task2ToolStripMenuItem;
     }
 }

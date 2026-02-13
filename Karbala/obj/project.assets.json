@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\Karbala.csproj",
+      "projectUniqueName": "D:\\Karbala\\Karbala\\Karbala.csproj",
       "projectName": "Karbala",
-      "projectPath": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\Karbala.csproj",
+      "projectPath": "D:\\Karbala\\Karbala\\Karbala.csproj",
       "packagesPath": "C:\\Users\\Haiad\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Haiad\\source\\repos\\Karbala\\Karbala\\obj\\",
+      "outputPath": "D:\\Karbala\\Karbala\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -47,7 +47,7 @@
             pictureBox1.Dock = DockStyle.Fill;
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(800, 450);
+            pictureBox1.Size = new Size(838, 604);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
@@ -73,6 +73,7 @@
             label1.Size = new Size(38, 15);
             label1.TabIndex = 2;
             label1.Text = "label1";
+            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -89,7 +90,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 450);
+            panel1.Size = new Size(838, 604);
             panel1.TabIndex = 4;
             // 
             // panel2
@@ -99,14 +100,14 @@
             panel2.Controls.Add(label2);
             panel2.Controls.Add(label1);
             panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(621, 0);
+            panel2.Location = new Point(659, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(179, 450);
+            panel2.Size = new Size(179, 604);
             panel2.TabIndex = 1;
             // 
             // but_Exit
             // 
-            but_Exit.Location = new Point(60, 415);
+            but_Exit.Location = new Point(69, 439);
             but_Exit.Name = "but_Exit";
             but_Exit.Size = new Size(75, 23);
             but_Exit.TabIndex = 1;
@@ -127,7 +128,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(838, 604);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Name = "Form_Task1";

@@ -15,32 +15,6 @@ namespace Karbala
             InitializeComponent();
         }
 
-        private void task1ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void task1ToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            // If a Form_Task1 instance is already open, activate it instead of opening a new one.
-            foreach (Form openForm in Application.OpenForms)
-            {
-                if (openForm is Form_Task1 existing)
-                {
-                    if (existing.WindowState == FormWindowState.Minimized)
-                        existing.WindowState = FormWindowState.Normal;
-
-                    existing.BringToFront();
-                    existing.Activate();
-                    return;
-                }
-            }
-
-            // Otherwise create and show a new instance (non-modal).
-            var task1 = new Form_Task1();
-            task1.Show();
-        }
-
         private void TSM_Tasks_Average_Task1_Click(object sender, EventArgs e)
         {
             // If a Form_Task1 instance is already open, activate it instead of opening a new one.
@@ -60,6 +34,45 @@ namespace Karbala
             // Otherwise create and show a new instance (non-modal).
             var task1 = new Form_Task1();
             task1.Show();
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm is Advanced_Task1 existing)
+                {
+                    if (existing.WindowState == FormWindowState.Minimized)
+                        existing.WindowState = FormWindowState.Normal;
+
+                    existing.BringToFront();
+                    existing.Activate();
+                    return;
+                }
+            }
+
+            var Form = new Advanced_Task1();
+            Form.Show();
+        }
+
+        private void task2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Form openForm in Application.OpenForms)
+            {
+                if (openForm is Form_Task2 existing)
+                {
+                    if (existing.WindowState == FormWindowState.Minimized)
+                        existing.WindowState = FormWindowState.Normal;
+
+                    existing.BringToFront();
+                    existing.Activate();
+                    return;
+                }
+            }
+
+            var Form = new Form_Task2();
+            Form.Show();
+
         }
     }
 }

@@ -6,7 +6,6 @@ namespace Karbala
         public Form_Task1()
         {
             InitializeComponent();
-            Bitmap bmp = new Bitmap(400, 400);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -82,6 +81,11 @@ namespace Karbala
             var dashboard = new Form_Dashboard();
             dashboard.Show();
             Close();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
