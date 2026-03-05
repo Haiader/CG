@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Karbala")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0f6fdf2ef4bd68e1927361885adba84f7f8d5a6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cebbdf59cd2be1144efe32d9d9ec008e5bdd642e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Karbala")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Karbala")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
