@@ -1,0 +1,58 @@
+﻿using System;
+
+namespace Lab_Code_s
+{
+    /// <summary>
+    /// Captures a single performance measurement snapshot containing execution time, CPU usage, and memory allocation.
+    /// </summary>
+    public class PerformanceSnapshot
+    {
+        /// <summary>
+        /// Execution duration in milliseconds.
+        /// </summary>
+        public double ExecutionTimeMs { get; set; }
+
+        /// <summary>
+        /// CPU usage percentage at time of measurement (0-100).
+        /// </summary>
+        public float CpuPercent { get; set; }
+
+        /// <summary>
+        /// Memory allocated during execution in bytes.
+        /// </summary>
+        public long MemoryBytes { get; set; }
+
+        /// <summary>
+        /// The name/identifier of the drawing algorithm or test.
+        /// </summary>
+        public string AlgorithmName { get; set; } = "";
+
+        /// <summary>
+        /// Indicates whether this snapshot was captured in slow-motion mode (toggle ON).
+        /// </summary>
+        public bool IsSlowMode { get; set; }
+
+        /// <summary>
+        /// Timestamp when this snapshot was captured.
+        /// </summary>
+        public DateTime CapturedAt { get; set; }
+
+        public PerformanceSnapshot()
+        {
+            CapturedAt = DateTime.Now;
+        }
+
+        /// <summary>
+        /// Returns memory in megabytes for display.
+        /// </summary>
+        public double MemoryMB => MemoryBytes / (1024.0 * 1024.0);
+
+        /// <summary>
+        /// Returns a formatted display string.
+        /// </summary>
+        public override string ToString()
+        {
+            return $"[{AlgorithmName}] Time: {ExecutionTimeMs:F2}ms | CPU: {CpuPercent:F1}% | Mem: {MemoryMB:F2}MB | Mode: {(IsSlowMode ? "SLOW" : "FAST")}";
+        }
+    }
+}

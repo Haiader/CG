@@ -1,0 +1,688 @@
+﻿global using System.Drawing;
+using System.Diagnostics;
+using System.Drawing.Imaging;
+using System.Drawing.Text;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+
+namespace PixelCraft
+{
+    public partial class Form1 : Form
+    {
+
+        public Bitmap bmp;
+        bool isDrawing = false;
+        List<Point> freehandPoints = new List<Point>();
+        Bitmap backupBmp;
+
+        private Label lblMetrics;
+        private long pixelCount = 0;
+        private Stopwatch drawTimer = new Stopwatch();
+
+        public Form1()
+        {
+            InitializeComponent();
+            bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+                g.Clear(Color.White);
+
+            InitializeMetricsDisplay();
+            ButtonStyler.ApplyMinecraftStyle(this);
+        }
+
+        private void InitializeMetricsDisplay()
+        {
+            lblMetrics = new Label
+            {
+                Text = "Ready",
+                Font = new Font("Arial", 12, FontStyle.Bold),
+                ForeColor = Color.Black,
+                BackColor = Color.LightGray,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Fill,
+                AutoSize = false
+            };
+
+            if (panel3 != null)
+            {
+                panel3.Controls.Clear();
+                panel3.Controls.Add(lblMetrics);
+            }
+        }
+
+        private void UpdateMetrics(string algorithmName)
+        {
+            float TimeinSecond = drawTimer.ElapsedMilliseconds/1000;
+            lblMetrics.Text = $"{algorithmName}\nTime: {drawTimer.ElapsedMilliseconds}ms [~{TimeinSecond}s] | Pixels: {pixelCount}";
+
+            if (drawTimer.ElapsedMilliseconds < 50)
+                lblMetrics.ForeColor = Color.Green;
+            else if (drawTimer.ElapsedMilliseconds < 200)
+                lblMetrics.ForeColor = Color.Orange;
+            else
+                lblMetrics.ForeColor = Color.Red;
+        }
+
+        private void ClearCanvas()
+        {
+            // إذا تغير حجم البكتشر بوكس، نحتاج بناء بيتماب جديد
+            if (bmp == null || bmp.Width != pictureBox1.Width || bmp.Height != pictureBox1.Height)
+            {
+                bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            }
+
+            using (Graphics g = Graphics.FromImage(bmp))
+                g.Clear(Color.White);
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+        }
+
+        private void ApplyDelay()
+        {
+            // التأكد من أن المستخدم اختار الرسم البطيء
+            if (chkSlowMotion.Checked)
+            {
+                // تحديث صورة البكتشر بوكس فوراً لعرض البكسل الجديد
+                pictureBox1.Refresh();
+                // تأخير لمدة 5 ملي ثانية (يمكنك تغيير الرقم لزيادة البطء)
+                Thread.Sleep(2);
+            }
+        }
+
+        // المختبر الأول
+        private void button1_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+
+            ClearCanvas();
+            bmp.SetPixel(50, 110, Color.Red);
+            pixelCount = 1;
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+
+            drawTimer.Stop();
+            UpdateMetrics("Single Pixel");
+
+        }
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            int x = 100, y = 100;
+
+            for (int i = 0; i < 100; i++)
+            {
+                for (int j = 0; j < 100; j++)
+                {
+                    bmp.SetPixel(x + i, y + j, Color.Red);
+                    pixelCount++;
+                }
+            }
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Filled Square");
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            int x = 100, y = 100, size = 100;
+
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x + i, y, Color.Red);
+                pixelCount++;
+            }
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x + size, y + i, Color.Red);
+                pixelCount++;
+            }
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x + i, y + size, Color.Red);
+                pixelCount++;
+            }
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x, y + i, Color.Red);
+                pixelCount++;
+            }
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Square Outline");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            int x = 100, y = 100;
+
+            for (int i = 0; i < 100; i++)
+            {
+                bmp.SetPixel(x + i, y, Color.Red);
+                pixelCount++;
+            }
+            for (int i = 0; i < 100; i++)
+            {
+                bmp.SetPixel(x, y + i, Color.Blue);
+                pixelCount++;
+            }
+            for (int i = 0; i < 100; i++)
+            {
+                bmp.SetPixel(x + i, y + i, Color.Green);
+                pixelCount++;
+            }
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Three Lines");
+        }
+
+
+
+        // المختبر الثاني
+        private void button8_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            int x = 100, y = 100;
+
+            for (int ix = 0; ix < 255; ix++)
+            {
+                for (int iy = 0; iy < 20; iy++)
+                {
+                    bmp.SetPixel(x + ix, y + iy, Color.Red);
+                    pixelCount++;
+                }
+            }
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Gradient Bar");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            int x = 100, y = 100;
+
+            for (int ix = 0; ix < 255; ix++)
+            {
+                for (int iy = 0; iy < 20; iy++)
+                {
+                    bmp.SetPixel(x + ix, y + iy, Color.FromArgb(ix, 0, 0));
+                    pixelCount++;
+                }
+            }
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("RGB Gradient");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            float x1 = 50, y1 = 50, x2 = 300, y2 = 100;
+            float m = (y2 - y1) / (x2 - x1);
+            float b = y1 - (m * x1);
+
+            for (float x = x1; x <= x2; x++)
+            {
+                float y = (m * x) + b;
+                bmp.SetPixel((int)x, (int)y, Color.Red);
+                pixelCount++;
+            }
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Simple Slope");
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            float x1 = 50, y1 = 50, x2 = 100, y2 = 300;
+            float m = (y2 - y1) / (x2 - x1);
+            float b = y1 - (m * x1);
+
+            for (float x = x1; x <= x2; x++)
+            {
+                float y = (m * x) + b;
+                int ix = (int)x;
+                int iy = (int)y;
+                if (ix >= 0 && ix < bmp.Width && iy >= 0 && iy < bmp.Height)
+                {
+                    bmp.SetPixel(ix, iy, Color.Red);
+                    pixelCount++;
+                }
+            }
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Steep Slope");
+        }
+
+        // المختبر الثالث
+        private void RunDDA(int x1, int y1, int x2, int y2, Color color)
+        {
+            float dx = x2 - x1;
+            float dy = y2 - y1;
+            float steps = Math.Max(Math.Abs(dx), Math.Abs(dy));
+            float xInc = dx / steps;
+            float yInc = dy / steps;
+            float x = x1, y = y1;
+
+            for (int i = 0; i <= steps; i++)
+            {
+                int ix = (int)Math.Round(x);
+                int iy = (int)Math.Round(y);
+
+                if (ix >= 0 && ix < bmp.Width && iy >= 0 && iy < bmp.Height)
+                {
+                    bmp.SetPixel(ix, iy, color);
+                    pixelCount++;
+                    ApplyDelay();
+                }
+
+                x += xInc;
+                y += yInc;
+            }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            RunDDA(50, 50, 100, 300, Color.Red);
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("DDA Line");
+        }
+
+        private void RunBresenham(int x1, int y1, int x2, int y2, Color color)
+        {
+            int dx = Math.Abs(x2 - x1);
+            int dy = Math.Abs(y2 - y1);
+            int sx = x1 < x2 ? 1 : -1;
+            int sy = y1 < y2 ? 1 : -1;
+            int err = dx - dy;
+            int x = x1, y = y1;
+
+            while (true)
+            {
+                if (x >= 0 && x < bmp.Width && y >= 0 && y < bmp.Height)
+                {
+                    bmp.SetPixel(x, y, color);
+                    pixelCount++;
+                    ApplyDelay();
+                }
+
+                if (x == x2 && y == y2) break;
+
+                int e2 = err * 2;
+                if (e2 > -dy) { err -= dy; x += sx; }
+                if (e2 < dx) { err += dx; y += sy; }
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            RunBresenham(50, 50, 400, 150, Color.Red);
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Bresenham Line");
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            RunDDA(200, 50, 150, 200, Color.Green);
+            RunDDA(200, 50, 250, 200, Color.Green);
+            RunDDA(150, 200, 250, 200, Color.Green);
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Triangle");
+        }
+
+        private void DrawLine(int x1, int y1, int x2, int y2)
+        {
+            int dx = Math.Abs(x2 - x1);
+            int dy = Math.Abs(y2 - y1);
+            int sx = x1 < x2 ? 1 : -1;
+            int sy = y1 < y2 ? 1 : -1;
+            int err = dx - dy;
+
+            while (true)
+            {
+                if (x1 >= 0 && x1 < bmp.Width && y1 >= 0 && y1 < bmp.Height)
+                {
+                    bmp.SetPixel(x1, y1, Color.Black);
+                    pixelCount++;
+                    ApplyDelay();
+                }
+
+                if (x1 == x2 && y1 == y2) break;
+                int e2 = err * 2;
+                if (e2 > -dy) { err -= dy; x1 += sx; }
+                if (e2 < dx) { err += dx; y1 += sy; }
+            }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            DrawLine(50, 150, 200, 150);
+            DrawLine(50, 150, 50, 280);
+            DrawLine(200, 150, 200, 280);
+            DrawLine(50, 280, 200, 280);
+            DrawLine(50, 150, 125, 80);
+            DrawLine(200, 150, 125, 80);
+            DrawLine(240, 230, 240, 280);
+            DrawLine(260, 230, 260, 280);
+            DrawLine(240, 280, 260, 280);
+            DrawLine(220, 230, 250, 160);
+            DrawLine(280, 230, 250, 160);
+            DrawLine(220, 230, 280, 230);
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("House");
+        }
+
+        // المختبر الرابع
+        private void Draw8Points(int xc, int yc, int x, int y, Color color)
+        {
+            void SafeSet(int sx, int sy)
+            {
+                if (sx >= 0 && sx < bmp.Width && sy >= 0 && sy < bmp.Height)
+                {
+                    bmp.SetPixel(sx, sy, color);
+                    pixelCount++;
+                }
+            }
+
+            SafeSet(xc + x, yc + y);
+            SafeSet(xc - x, yc + y);
+            SafeSet(xc + x, yc - y);
+            SafeSet(xc - x, yc - y);
+            SafeSet(xc + y, yc + x);
+            SafeSet(xc - y, yc + x);
+            SafeSet(xc + y, yc - x);
+            SafeSet(xc - y, yc - x);
+        }
+
+        private void RunMidpointCircle(int xc, int yc, int r, Color color)
+        {
+            int x = 0, y = r;
+            int p = 1 - r;
+
+            while (x <= y)
+            {
+                Draw8Points(xc, yc, x, y, color);
+                x++;
+
+                if (p < 0)
+                    p = p + (x << 1) + 1;
+                else
+                {
+                    y--;
+                    p = p + (x << 1) - (y << 1) + 1;
+                }
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            int x = 0, y = 100;
+            for (int theta = 0; theta <= 360; theta += 1)
+            {
+                double rad = theta * Math.PI / 180.0;
+                x = (int)Math.Round(450 + 100 * Math.Cos(rad));
+                y = (int)Math.Round(250 + 100 * Math.Sin(rad));
+
+                if (x >= 0 && x < bmp.Width && y >= 0 && y < bmp.Height)
+                {
+                    bmp.SetPixel(x, y, Color.Red);
+                    pixelCount++;
+                    ApplyDelay();
+                }
+            }
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Standard Circle");
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            for (double theta = 0; theta <= 360; theta += 1)
+            {
+                double rad = theta * Math.PI / 180.0;
+                int x = (int)Math.Round(450 + 100 * Math.Cos(rad));
+                int y = (int)Math.Round(250 + 100 * Math.Sin(rad));
+
+                if (x >= 0 && x < bmp.Width && y >= 0 && y < bmp.Height)
+                {
+                    bmp.SetPixel(x, y, Color.Blue);
+                    pixelCount++;
+                    ApplyDelay();
+                }
+            }
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Polar Circle");
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ApplyDelay();
+            ClearCanvas();
+
+            RunMidpointCircle(450, 250, 100, Color.Blue);
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Midpoint Circle");
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            int xc = pictureBox1.Width / 2;
+            int yc = pictureBox1.Height / 2;
+
+            RunMidpointCircle(xc, yc, 120, Color.Black);
+            RunMidpointCircle(xc - 50, yc - 30, 25, Color.Blue);
+            RunMidpointCircle(xc - 50, yc - 30, 7, Color.Black);
+            RunMidpointCircle(xc + 50, yc - 30, 25, Color.Blue);
+            RunMidpointCircle(xc + 50, yc - 30, 7, Color.Black);
+            RunMidpointCircle(xc - 100, yc - 90, 45, Color.Gray);
+            RunMidpointCircle(xc + 100, yc - 90, 45, Color.Gray);
+            RunMidpointCircle(xc, yc + 60, 30, Color.Red);
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Face");
+        }
+
+        // المختبر الخامس
+        private void button20_Click(object sender, EventArgs e)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            RunDDA(100, 200, 200, 100, Color.Blue);
+            RunDDA(200, 100, 300, 200, Color.Blue);
+            RunDDA(300, 200, 100, 200, Color.Blue);
+
+            RunDDA(500, 100, 600, 150, Color.Red);
+            RunDDA(600, 150, 500, 300, Color.Red);
+            RunDDA(500, 300, 400, 150, Color.Red);
+            RunDDA(400, 150, 500, 100, Color.Red);
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics("Shapes");
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDrawing = true;
+            freehandPoints.Clear();
+            freehandPoints.Add(e.Location);
+            backupBmp = (Bitmap)bmp.Clone();
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            label6.Text = $"X: {e.X}, Y: {e.Y}";
+            if (isDrawing && freehandPoints.Count > 0)
+            {
+                freehandPoints.Add(e.Location);
+                int lastIndex = freehandPoints.Count - 1;
+
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    Pen pen = new Pen(Color.Gray, 2);
+                    g.DrawLine(pen, freehandPoints[lastIndex - 1], freehandPoints[lastIndex]);
+                }
+                pictureBox1.Image = bmp;
+                pictureBox1.Refresh();
+            }
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!isDrawing) return;
+            isDrawing = false;
+            bmp = (Bitmap)backupBmp.Clone();
+
+            if (freehandPoints.Count > 10)
+            {
+                Point startPt = freehandPoints.First();
+                Point endPt = freehandPoints.Last();
+                double distance = Math.Sqrt(Math.Pow(endPt.X - startPt.X, 2) + Math.Pow(endPt.Y - startPt.Y, 2));
+
+                if (distance > 50)
+                {
+                    DrawLine(startPt.X, startPt.Y, endPt.X, endPt.Y);
+                }
+            }
+
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            lblMetrics.Text = "Ready";
+            lblMetrics.ForeColor = Color.Black;
+
+            bmp.Save("art.png", ImageFormat.Png);
+
+
+        }
+
+        private void btnDrawPortrait_Click_Click(object sender, EventArgs e)
+        {
+            // تنظيف الشاشة كما تفعل في باقي المختبرات
+            ClearCanvas();
+            pixelCount = 0;
+            drawTimer.Restart();
+
+            // إنشاء الكلاس الجديد وتمرير الفورم ودالة التأخير
+            PortraitRenderer renderer = new PortraitRenderer(this, ApplyDelay);
+
+            // تأكد من وضع مسار الصورة الصحيح هنا
+            renderer.DrawPortraitSlowly(@"C:\Users\Haiad\Desktop\img\1.jpg");
+
+            // copy the count from renderer to form-level pixelCount for metrics
+            pixelCount = renderer.PixelCount;
+
+            drawTimer.Stop();
+            UpdateMetrics("Portrait Drawing");
+        }
+    }
+}
+

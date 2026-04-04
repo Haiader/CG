@@ -1,0 +1,459 @@
+﻿global using System.Drawing;
+
+namespace Lab_Code_s
+{
+    public partial class Form1 : Form
+    {
+        public Bitmap bmp;
+        List<string> codes = new List<string>();
+
+        public Form1()
+        {
+            InitializeComponent();
+            bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+        }
+        private void ClearCanvas()
+        {
+            if (bmp == null) return;
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(Color.White);
+            }
+            pictureBox1.Image = bmp;
+        }
+
+        // Point overload for RunDDA
+        void RunDDA(Point p1, Point p2, Color color, Bitmap bmp, PictureBox pbox)
+        {
+            RunDDA(p1.X, p1.Y, p2.X, p2.Y, color, bmp, pbox);
+        }
+
+        // Point overload for Bresenham
+        void RunBresenham(Point p1, Point p2, Color color, Bitmap bmp)
+        {
+            RunBresenham(p1.X, p1.Y, p2.X, p2.Y, color, bmp);
+        }
+
+        // Point overload for DrawLine
+        private void DrawLine(Bitmap bmp, Point p1, Point p2)
+        {
+            DrawLine(bmp, p1.X, p1.Y, p2.X, p2.Y);
+        }
+
+        // Point overloads for circles
+        private void RunStandardCircle(Point center, int r, Color color, Bitmap bmp)
+        {
+            RunStandardCircle(center.X, center.Y, r, color, bmp);
+        }
+
+        private void RunPolarCircle(Point center, int r, Color color, Bitmap bmp)
+        {
+            RunPolarCircle(center.X, center.Y, r, color, bmp);
+        }
+
+        private void RunMidpointCircle(Point center, int r, Color color, Bitmap bmp)
+        {
+            RunMidpointCircle(center.X, center.Y, r, color, bmp);
+        }
+
+        //المختبر الاول  
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            int x = 100;
+            int y = 100;
+
+            bmp.SetPixel(x, y, Color.Red);
+            pictureBox1.Image = bmp;
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            int x = 100, y = 100;
+            int size = 100;
+
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x + i, y, Color.Red);
+                pictureBox1.Refresh();
+            }
+
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x + size, y + i, Color.Red);
+                pictureBox1.Refresh();
+            }
+
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x + i, y + size, Color.Red);
+                pictureBox1.Refresh();
+            }
+
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x, y + i, Color.Red);
+                pictureBox1.Refresh();
+                pictureBox1.Image = bmp;
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            int x = 100;
+            int y = 100;
+
+            for (int i = 0; i < 100; i++)
+            {
+                bmp.SetPixel(x + i, y, Color.Red);
+            }
+            for (int i = 0; i < 100; i++)
+            {
+                bmp.SetPixel(x, y + i, Color.Blue);
+            }
+
+            for (int i = 0; i < 100; i++)
+            {
+                bmp.SetPixel(x + i, y + i, Color.Green);
+            }
+
+            pictureBox1.Image = bmp;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+
+            int x = 100;
+            int y = 100;
+
+            for (int i = 0; i < 100; i++)
+            {
+                for (int j = 0; j < 100; j++)
+                {
+                    bmp.SetPixel(x + i, y + j, Color.Red);
+                }
+            }
+            pictureBox1.Image = bmp;
+        }
+        //==============================================================================================================//
+        //المختبر الثاني
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            int x = 100;
+            int y = 100;
+            for (int ix = 0; ix < 255; ix++)
+            {
+                for (int iy = 0; iy < 20; iy++)
+                {
+                    bmp.SetPixel(x + ix, y + iy, Color.Red);
+                }
+            }
+            pictureBox1.Image = bmp;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            int x = 100;
+            int y = 100;
+            for (int ix = 0; ix < 255; ix++)
+            {
+                for (int iy = 0; iy < 20; iy++)
+                {
+                    bmp.SetPixel(x + ix, y + iy, Color.FromArgb(ix, 0, 0));
+                }
+            }
+            pictureBox1.Image = bmp;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            float x1 = 50, y1 = 50;
+            float x2 = 300, y2 = 100;
+
+            float m = (y2 - y1) / (x2 - x1);
+            float b = y1 - (m * x1);
+
+            for (float x = x1; x <= x2; x++)
+            {
+                float y = (m * x) + b;
+
+                bmp.SetPixel((int)x, (int)y, Color.Red);
+            }
+
+            pictureBox1.Image = bmp;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            float x1 = 50, y1 = 50;
+            float x2 = 100, y2 = 300;
+            float m = (y2 - y1) / (x2 - x1);
+            float b = y1 - (m * x1);
+            for (float x = x1; x <= x2; x++)
+            {
+                float y = (m * x) + b;
+                bmp.SetPixel((int)x, (int)y, Color.Red);
+            }
+            pictureBox1.Image = bmp;
+        }
+        //==============================================================================================================//
+        //المختبر الثالث
+        void RunDDA(int x1, int y1, int x2, int y2, Color color, Bitmap bmp, PictureBox pbox)
+        {
+            float dx = x2 - x1;
+            float dy = y2 - y1;
+            float steps = Math.Max(Math.Abs(dx), Math.Abs(dy));
+            float xInc = dx / steps;
+            float yInc = dy / steps;
+            float x = x1;
+            float y = y1;
+
+            for (int i = 0; i <= steps; i++)
+            {
+                int ix = (int)Math.Round(x);
+                int iy = (int)Math.Round(y);
+
+                if (ix >= 0 && ix < bmp.Width && iy >= 0 && iy < bmp.Height)
+                {
+                    bmp.SetPixel(ix, iy, color);
+                }
+
+                x += xInc;
+                y += yInc;
+
+                System.Threading.Thread.Sleep(10);
+                pbox.Image = bmp;
+                pbox.Refresh();
+            }
+        }
+        private void button12_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            RunDDA(new Point(50, 50), new Point(100, 300), Color.Red, bmp, pictureBox1);
+        }
+        void RunBresenham(int x1, int y1, int x2, int y2, Color color, Bitmap bmp)
+        {
+            int dx = Math.Abs(x2 - x1);
+            int dy = Math.Abs(y2 - y1);
+
+            int p = 2 * dy - dx;
+            int y = y1;
+
+            for (int x = x1; x <= x2; x++)
+            {
+                bmp.SetPixel(x, y, color);
+
+                if (p >= 0)
+                {
+                    y = y + 1;
+                    p = p + 2 * dy - 2 * dx;
+                }
+                else
+                {
+                    p = p + 2 * dy;
+                }
+            }
+            pictureBox1.Image = bmp;
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            RunBresenham(new Point(50, 50), new Point(400, 150), Color.Red, bmp);
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            RunDDA(new Point(200, 50), new Point(150, 200), Color.Green, bmp, pictureBox1);
+
+            RunDDA(new Point(200, 50), new Point(250, 200), Color.Green, bmp, pictureBox1);
+
+            RunDDA(new Point(150, 200), new Point(250, 200), Color.Green, bmp, pictureBox1);
+        }
+        private void DrawLine(Bitmap bmp, int x1, int y1, int x2, int y2)
+        {
+            int dx = Math.Abs(x2 - x1);
+            int dy = Math.Abs(y2 - y1);
+            int sx = x1 < x2 ? 1 : -1;
+            int sy = y1 < y2 ? 1 : -1;
+            int err = dx - dy;
+
+            while (true)
+            {
+                bmp.SetPixel(x1, y1, Color.Black);
+                if (x1 == x2 && y1 == y2) break;
+                int e2 = err * 2;
+                if (e2 > -dy) { err -= dy; x1 += sx; }
+                if (e2 < dx) { err += dx; y1 += sy; }
+            }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            DrawLine(bmp, new Point(50,150), new Point(200,150));
+            DrawLine(bmp, new Point(50,150), new Point(50,280));
+            DrawLine(bmp, new Point(200,150), new Point(200,280));
+            DrawLine(bmp, new Point(50,280), new Point(200,280));
+
+            DrawLine(bmp, new Point(50,150), new Point(125,80));
+            DrawLine(bmp, new Point(200,150), new Point(125,80));
+
+            DrawLine(bmp, new Point(240,230), new Point(240,280));
+            DrawLine(bmp, new Point(260,230), new Point(260,280));
+            DrawLine(bmp, new Point(240,280), new Point(260,280));
+
+            DrawLine(bmp, new Point(220,230), new Point(250,160));
+            DrawLine(bmp, new Point(280,230), new Point(250,160));
+            DrawLine(bmp, new Point(220,230), new Point(280,230));
+            pictureBox1.Image = bmp;
+        }
+        //==============================================================================================================//
+        //المختبر الرابع
+        private void RunStandardCircle(int xc, int yc, int r, Color color, Bitmap bmp)
+        {
+            for (int x = 0; x <= r; x++)
+            {
+                double yCalc = Math.Sqrt((r * r) - (x * x));
+                int y = (int)Math.Round(yCalc);
+
+                bmp.SetPixel(xc + x, yc + y, color);
+                bmp.SetPixel(xc + x, yc - y, color);
+                bmp.SetPixel(xc - x, yc + y, color);
+                bmp.SetPixel(xc - x, yc - y, color);
+
+                System.Threading.Thread.Sleep(10);
+                pictureBox1.Refresh();
+                pictureBox1.Image = bmp;
+            }
+            pictureBox1.Image = bmp;
+        }
+        private void button16_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            RunStandardCircle(new Point(450, 250), 100, Color.Red, bmp);
+        }
+        private void RunPolarCircle(int xc, int yc, int r, Color color, Bitmap bmp)
+        {
+            for (double theta = 0; theta <= 360; theta += 1)
+            {
+                double radian = theta * (Math.PI / 180.0);
+
+                int x = (int)Math.Round(r * Math.Cos(radian));
+                int y = (int)Math.Round(r * Math.Sin(radian));
+
+                bmp.SetPixel(xc + x, yc + y, color);
+
+                System.Threading.Thread.Sleep(10);
+                pictureBox1.Refresh();
+                pictureBox1.Image = bmp;
+            }
+
+            pictureBox1.Image = bmp;
+        }
+        private void button14_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            RunPolarCircle(new Point(450, 250), 100, Color.Blue, bmp);
+
+        }
+        private void Draw8Points(int xc, int yc, int x, int y, Color color,
+Bitmap bmp)
+        {
+            bmp.SetPixel(xc + x, yc + y, color);
+            bmp.SetPixel(xc - x, yc + y, color);
+            bmp.SetPixel(xc + x, yc - y, color);
+            bmp.SetPixel(xc - x, yc - y, color);
+            bmp.SetPixel(xc + y, yc + x, color);
+            bmp.SetPixel(xc - y, yc + x, color);
+            bmp.SetPixel(xc + y, yc - x, color);
+            bmp.SetPixel(xc - y, yc - x, color);
+            pictureBox1.Image = bmp;
+        }
+        private void RunMidpointCircle(int xc, int yc, int r, Color color, Bitmap bmp)
+        {
+            int x = 0;
+            int y = r;
+            int p = 1 - r;
+
+            while (x <= y)
+            {
+                Draw8Points(xc, yc, x, y, color, bmp);
+
+                System.Threading.Thread.Sleep(15);
+                pictureBox1.Refresh();
+                pictureBox1.Image = bmp;
+                x++;
+
+                if (p < 0)
+                {
+                    p = p + (x << 1) + 1;
+                }
+                else
+                {
+                    y--;
+                    p = p + (x << 1) - (y << 1) + 1;
+                }
+            }
+            pictureBox1.Image = bmp;
+        }
+        private void button13_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            RunMidpointCircle(new Point(450, 250), 100, Color.Blue, bmp);
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+            int xc = pictureBox1.Width / 2;
+            int yc = pictureBox1.Height / 2;
+
+            var center = new Point(xc, yc);
+            RunMidpointCircle(center, 120, Color.Black, bmp);
+            RunMidpointCircle(new Point(xc - 50, yc - 30), 25, Color.Blue, bmp);
+            RunMidpointCircle(new Point(xc - 50, yc - 30), 7, Color.Black, bmp);
+            RunMidpointCircle(new Point(xc + 50, yc - 30), 25, Color.Blue, bmp);
+            RunMidpointCircle(new Point(xc + 50, yc - 30), 7, Color.Black, bmp);
+            RunMidpointCircle(new Point(xc - 100, yc - 90), 45, Color.Gray, bmp);
+            RunMidpointCircle(new Point(xc + 100, yc - 90), 45, Color.Gray, bmp);
+            RunMidpointCircle(new Point(xc, yc + 60), 30, Color.Red, bmp);
+
+            pictureBox1.Image = bmp;
+        }
+        //==============================================================================================================//
+        //المختبر الخامس
+        void DrawShape(int x1, int y1, int x2, int y2, int x3, int y3, Color c, Bitmap bmp, PictureBox pbox)
+        {
+            RunDDA(x1, y1, x2, y2, c, bmp, pbox);
+            RunDDA(x2, y2, x3, y3, c, bmp, pbox);
+            RunDDA(x3, y3, x1, y1, c, bmp, pbox);
+        }
+        void DrawShape(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, Color c, Bitmap bmp, PictureBox pbox)
+        {
+            RunDDA(x1, y1, x2, y2, c, bmp, pbox);
+            RunDDA(x2, y2, x3, y3, c, bmp, pbox);
+            RunDDA(x3, y3, x4, y4, c, bmp, pbox);
+            RunDDA(x4, y4, x1, y1, c, bmp, pbox);
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+
+            DrawShape(100, 200, 200, 100, 300, 200, Color.Blue, bmp , pictureBox1);
+
+            DrawShape(500, 100, 600, 150, 500, 300, 400, 150, Color.Red, bmp , pictureBox1);
+
+            pictureBox1.Image = bmp;
+
+        }
+    }
+}
+

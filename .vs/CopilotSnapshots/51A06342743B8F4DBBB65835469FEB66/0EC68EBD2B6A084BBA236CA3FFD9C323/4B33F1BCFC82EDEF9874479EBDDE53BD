@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace PixelCraft
+{
+    public class PortraitRenderer
+    {
+        private Form1 _mainForm;
+        private Action _applyDelayMethod;
+
+        // نستقبل كائن الفورم الأساسي ودالة التأخير كمتغيرات
+        public PortraitRenderer(Form1 form, Action applyDelay)
+        {
+            _mainForm = form;
+            _applyDelayMethod = applyDelay;
+
+        }
+
+        public void DrawPortraitSlowly(string imagePath)
+        {
+            // 1. تحميل الصورة الأصلية وتغيير حجمها لتناسب اللوحة (PictureBox)
+            Bitmap sourceImage = new Bitmap(imagePath);
+            Bitmap targetBmp = _mainForm.bmp;
+            Bitmap resizedSource = new Bitmap(sourceImage, targetBmp.Width, targetBmp.Height);
+
+            // 2. قوائم لتخزين البكسلات حسب "ترتيب الرسم المنطقي"
+            List<Point> outlinePixels = new List<Point>();   // الحدود الداكنة
+            List<Point> midTonePixels = new List<Point>();   // الظلال المتوسطة
+            List<Point> highlightPixels = new List<Point>(); // التفاصيل الفاتحة
+
+            _mainForm.pixelCount = 0;
+            // 3. تحليل الصورة وفرز البكسلات
+            for (int x = 0; x < resizedSource.Width; x++)
+            {
+                for (int y = 0; y < resizedSource.Height; y++)
+                {
+                    Color pixelColor = resizedSource.GetPixel(x, y);
+                    float brightness = pixelColor.GetBrightness();
+
+                    // فرز البكسلات بناءً على قوة الإضاءة (من 0.0 للأسود إلى 1.0 للأبيض)
+                    if (brightness < 0.35f)
+                        outlinePixels.Add(new Point(x, y));
+                    else if (brightness >= 0.35f && brightness < 0.70f)
+                        midTonePixels.Add(new Point(x, y));
+                    else if (brightness >= 0.70f && brightness < 0.95f)
+                        highlightPixels.Add(new Point(x, y));
+                    // يتم تجاهل البكسلات البيضاء تماماً (الخلفية) لتسريع الرسم
+                }
+            }
+
+            // 4. رسم الطبقات بالترتيب
+            DrawLayer(resizedSource, outlinePixels);   // رسم الخطوط العريضة أولاً
+            DrawLayer(resizedSource, midTonePixels);   // رسم التظليل المتوسط
+            //DrawLayer(resizedSource, highlightPixels); // رسم اللمسات الأخيرة
+        }
+
+        private void DrawLayer(Bitmap sourceImage, List<Point> pixels)
+        {
+            int counter = 0;
+            foreach (Point pt in pixels)
+            {
+                // استخدام دالة SetPixel لرسم البكسل على الكانفاس الرئيسي
+                _mainForm.bmp.SetPixel(pt.X, pt.Y, sourceImage.GetPixel(pt.X, pt.Y));
+                counter++;
+
+                // لضمان عدم تجميد واجهة المستخدم وجعل الرسم مرئياً
+                // نقوم بتطبيق التأخير كل 50 بكسل (يمكنك تعديل الرقم حسب السرعة المطلوبة)
+                if (counter % 50 == 0)
+                {
+                    _applyDelayMethod();
+                }
+            }
+            // تحديث أخير بعد انتهاء الطبقة
+            _applyDelayMethod();
+        }
+    }
+}

@@ -1,0 +1,95 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Haiad\\Desktop\\Lab-Code\u0027s\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{71651D64-3CDD-166A-D0E3-88B904965116}|Lab-Code\u0027s\\PixelCraft.csproj|c:\\users\\haiad\\desktop\\lab-code\u0027s\\lab-code\u0027s\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71651D64-3CDD-166A-D0E3-88B904965116}|Lab-Code\u0027s\\PixelCraft.csproj|solutionrelative:lab-code\u0027s\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71651D64-3CDD-166A-D0E3-88B904965116}|Lab-Code\u0027s\\Lab-Code\u0027s.csproj|c:\\users\\haiad\\desktop\\lab-code\u0027s\\lab-code\u0027s\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71651D64-3CDD-166A-D0E3-88B904965116}|Lab-Code\u0027s\\Lab-Code\u0027s.csproj|solutionrelative:lab-code\u0027s\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71651D64-3CDD-166A-D0E3-88B904965116}|Lab-Code\u0027s\\PixelCraft.csproj|c:\\users\\haiad\\desktop\\lab-code\u0027s\\lab-code\u0027s\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{71651D64-3CDD-166A-D0E3-88B904965116}|Lab-Code\u0027s\\PixelCraft.csproj|solutionrelative:lab-code\u0027s\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{71651D64-3CDD-166A-D0E3-88B904965116}|Lab-Code\u0027s\\Lab-Code\u0027s.csproj|C:\\Users\\Haiad\\Desktop\\Lab-Code\u0027s\\lab-code\u0027s\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{71651D64-3CDD-166A-D0E3-88B904965116}|Lab-Code\u0027s\\Lab-Code\u0027s.csproj|solutionrelative:lab-code\u0027s\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Haiad\\Desktop\\Lab-Code\u0027s\\Lab-Code\u0027s\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "Lab-Code\u0027s\\Form1.Designer.cs",
+              "ToolTip": "C:\\Users\\Haiad\\Desktop\\Lab-Code\u0027s\\Lab-Code\u0027s\\Form1.Designer.cs",
+              "RelativeToolTip": "Lab-Code\u0027s\\Form1.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T08:29:28.811Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Haiad\\Desktop\\Lab-Code\u0027s\\Lab-Code\u0027s\\Program.cs",
+              "RelativeDocumentMoniker": "Lab-Code\u0027s\\Program.cs",
+              "ToolTip": "C:\\Users\\Haiad\\Desktop\\Lab-Code\u0027s\\Lab-Code\u0027s\\Program.cs",
+              "RelativeToolTip": "Lab-Code\u0027s\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T08:29:13.947Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Haiad\\Desktop\\Lab-Code\u0027s\\Lab-Code\u0027s\\Form1.cs",
+              "RelativeDocumentMoniker": "Lab-Code\u0027s\\Form1.cs",
+              "ToolTip": "C:\\Users\\Haiad\\Desktop\\Lab-Code\u0027s\\Lab-Code\u0027s\\Form1.cs [Design]",
+              "RelativeToolTip": "Lab-Code\u0027s\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T06:41:07.585Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\Haiad\\Desktop\\Lab-Code\u0027s\\Lab-Code\u0027s\\Form1.cs",
+              "RelativeDocumentMoniker": "Lab-Code\u0027s\\Form1.cs",
+              "ToolTip": "C:\\Users\\Haiad\\Desktop\\Lab-Code\u0027s\\Lab-Code\u0027s\\Form1.cs",
+              "RelativeToolTip": "Lab-Code\u0027s\\Form1.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAawBQAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-29T06:33:58.381Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

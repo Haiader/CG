@@ -1,0 +1,950 @@
+﻿global using System.Drawing;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Lab_Code_s
+{
+    public partial class Form1 : Form
+    {
+        public Bitmap bmp;
+        bool isDrawing = false;
+        List<Point> freehandPoints = new List<Point>();
+        Bitmap backupBmp;
+        List<string> codes = new List<string>();
+
+        // New: toggles to control slow/fast drawing per routine
+        private readonly Dictionary<string, bool> slowModes = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+
+        // UI controls added at runtime to hold toggles and CPU label
+        private FlowLayoutPanel flpToggles;
+        private Label lblCpuInfo;
+        private Label lblPerformanceMetrics;
+
+        // Resource monitor stub for future CPU/Resource usage feature
+        private ResourceMonitor resourceMonitor;
+
+        // Performance monitoring
+        private string _currentAlgorithm = "";
+        private PerformanceMeasurementToken _currentPerfToken = null;
+
+        public Form1()
+        {
+            InitializeComponent();
+            bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+
+            InitializeSlowModeKeys();
+            InitializeToggleControls();
+            InitializePerformanceDisplay();
+
+            // Prepare resource monitor (stub) so future CPU usage can be hooked easily
+            resourceMonitor = new ResourceMonitor();
+            // resourceMonitor.Start(UpdateCpuLabel); // Uncomment when implementing real monitoring
+        }
+
+        private void InitializeSlowModeKeys()
+        {
+            // Add a dictionary entry for each routine (keys used by methods)
+            var keys = new[]
+            {
+                "SetSinglePixel",
+                "SquareOutline",
+                "ThreeLines",
+                "FilledSquare",
+                "GradientBar",
+                "RGBGradient",
+                "Line_SimpleSlope",
+                "Line_SteepSlope",
+                "DDA",
+                "Bresenham",
+                "DrawLineGeneric",
+                "StandardCircle",
+                "PolarCircle",
+                "MidpointCircle",
+                "CompositeCircles",
+                "Shapes"
+            };
+
+            foreach (var k in keys)
+            {
+                slowModes[k] = false; // default: fast/instant
+            }
+        }
+
+        private bool IsSlow(string key) => slowModes.TryGetValue(key, out var v) && v;
+
+        /// <summary>
+        /// Initializes the performance metrics display label on the right side of the form.
+        /// </summary>
+        private void InitializePerformanceDisplay()
+        {
+            lblPerformanceMetrics = new Label
+            {
+                Text = "Perf: Ready",
+                AutoSize = true,
+                BorderStyle = BorderStyle.Fixed3D,
+                Padding = new Padding(6),
+                Margin = new Padding(6),
+                Cursor = Cursors.IBeam,
+                BackColor = Color.White,
+                ForeColor = Color.Black,
+                Font = new Font("Courier New", 8.5f)
+            };
+
+            // Allow text selection and copy on double-click
+            lblPerformanceMetrics.DoubleClick += (s, e) =>
+            {
+                try
+                {
+                    Clipboard.SetText(lblPerformanceMetrics.Text);
+                }
+                catch { /* ignore clipboard errors */ }
+            };
+
+            // Position on the right side, below CPU label in the toggle panel area
+            lblPerformanceMetrics.Left = Math.Max(Width - 350, pictureBox1.Right + 10);
+            lblPerformanceMetrics.Top = 200;
+            lblPerformanceMetrics.MaximumSize = new Size(300, 500);
+            lblPerformanceMetrics.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+
+            this.Controls.Add(lblPerformanceMetrics);
+        }
+
+        /// <summary>
+        /// Begins performance measurement for the specified algorithm.
+        /// Call this at the start of a drawing operation.
+        /// </summary>
+        private void BeginPerformanceMeasurement(string algorithmName)
+        {
+            _currentAlgorithm = algorithmName;
+            bool isSlowMode = IsSlow(algorithmName);
+            _currentPerfToken = PerformanceMonitor.BeginMeasurement(algorithmName, isSlowMode);
+        }
+
+        /// <summary>
+        /// Ends performance measurement and updates the display with latest metrics.
+        /// </summary>
+        private void EndPerformanceMeasurement()
+        {
+            if (_currentPerfToken == null) return;
+
+            var snapshot = PerformanceMonitor.EndMeasurement(_currentPerfToken);
+            UpdatePerformanceDisplay(_currentAlgorithm, snapshot);
+
+            _currentPerfToken = null;
+        }
+
+        /// <summary>
+        /// Updates the performance metrics display label with the latest snapshot and comparison data.
+        /// Thread-safe; can be called from any thread.
+        /// </summary>
+        private void UpdatePerformanceDisplay(string algorithmName, PerformanceSnapshot snapshot)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => UpdatePerformanceDisplay(algorithmName, snapshot)));
+                return;
+            }
+
+            // Build display text with latest metrics and comparison
+            string displayText = "PERFORMANCE METRICS\n";
+            displayText += "═══════════════════════════════════\n\n";
+
+            displayText += $"Algorithm: {algorithmName}\n";
+            displayText += $"Mode: {(snapshot.IsSlowMode ? "SLOW (Animated)" : "FAST (Direct)")}\n\n";
+
+            displayText += "Last Execution:\n";
+            displayText += $"  Time:   {snapshot.ExecutionTimeMs:F2} ms\n";
+            displayText += $"  CPU:    {snapshot.CpuPercent:F1} %\n";
+            displayText += $"  Memory: {snapshot.MemoryMB:F3} MB\n\n";
+
+            // Try to get comparison between slow and fast modes
+            string comparison = PerformanceMonitor.GetPerformanceComparison(algorithmName);
+            if (!comparison.Contains("Insufficient"))
+            {
+                displayText += "SLOW vs FAST Comparison:\n";
+                displayText += comparison + "\n";
+            }
+
+            displayText += "\n[Double-click to copy]";
+
+            lblPerformanceMetrics.Text = displayText;
+        }
+
+        private void InitializeToggleControls()
+        {
+            // Creates a small panel with checkboxes for toggling slow mode per routine.
+            flpToggles = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Padding = new Padding(6),
+                Location = new Point(this.ClientSize.Width - 200, 10)
+            };
+
+            // Keep the panel docked to the right even if the form resizes
+            flpToggles.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
+
+            // Add descriptive checkboxes (label = visible text, tag = key)
+            AddToggle("Set single pixel (button1)", "SetSinglePixel");
+            AddToggle("Square outline (button3)", "SquareOutline");
+            AddToggle("Three colored lines (button4)", "ThreeLines");
+            AddToggle("Filled square (button2)", "FilledSquare");
+            AddToggle("Gradient bar (button8)", "GradientBar");
+            AddToggle("RGB gradient (button6)", "RGBGradient");
+            AddToggle("Line (shallow slope) (button5)", "Line_SimpleSlope");
+            AddToggle("Line (steep slope) (button7)", "Line_SteepSlope");
+            AddToggle("DDA (button12, button9)", "DDA");
+            AddToggle("Bresenham (button10)", "Bresenham");
+            AddToggle("Generic DrawLine usages (button11)", "DrawLineGeneric");
+            AddToggle("Standard circle (button16)", "StandardCircle");
+            AddToggle("Polar circle (button14)", "PolarCircle");
+            AddToggle("Midpoint circle (button13, button15)", "MidpointCircle");
+            AddToggle("Composite circles (button15)", "CompositeCircles");
+            AddToggle("Shapes (button20)", "Shapes");
+
+            // CPU info label (prepared for future resource monitoring; supports copy on double-click)
+            lblCpuInfo = new Label
+            {
+                Text = "CPU: N/A",
+                AutoSize = true,
+                BorderStyle = BorderStyle.FixedSingle,
+                Padding = new Padding(4),
+                Margin = new Padding(6),
+                Cursor = Cursors.IBeam
+            };
+            lblCpuInfo.DoubleClick += (s, e) =>
+            {
+                try
+                {
+                    Clipboard.SetText(lblCpuInfo.Text);
+                }
+                catch { /* ignore clipboard errors */ }
+            };
+
+            flpToggles.Controls.Add(lblCpuInfo);
+
+            // Add the panel to the form controls (not to pictureBox). Place on right edge.
+            this.Controls.Add(flpToggles);
+
+            // Positioning: ensure it doesn't overlap pictureBox; adjust X based on current form width
+            flpToggles.Left = Math.Max(Width - flpToggles.PreferredSize.Width - 20, pictureBox1.Right + 10);
+            flpToggles.Top = 10;
+
+            // Handle resizing reposition
+            this.Resize += (s, e) =>
+            {
+                flpToggles.Left = Math.Max(ClientSize.Width - flpToggles.PreferredSize.Width - 10, pictureBox1.Right + 10);
+            };
+        }
+
+        private void AddToggle(string text, string key)
+        {
+            var cb = new CheckBox
+            {
+                Text = text,
+                Tag = key,
+                AutoSize = true,
+                Checked = slowModes.ContainsKey(key) ? slowModes[key] : false,
+                Margin = new Padding(3)
+            };
+            cb.CheckedChanged += (s, e) =>
+            {
+                var k = (s as CheckBox)!.Tag as string;
+                if (k != null) slowModes[k] = cb.Checked;
+            };
+            flpToggles.Controls.Add(cb);
+        }
+
+        private void UpdateCpuLabel(string text)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => UpdateCpuLabel(text)));
+                return;
+            }
+            lblCpuInfo.Text = text;
+        }
+
+        private void ClearCanvas()
+        {
+            if (bmp == null) return;
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.Clear(Color.White);
+            }
+            pictureBox1.Image = bmp;
+        }
+
+        //المختبر الاول  
+        private void button1_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("SetSinglePixel");
+            ClearCanvas();
+            int x = 100;
+            int y = 100;
+
+            bmp.SetPixel(x, y, Color.Red);
+            pictureBox1.Image = bmp;
+
+            // If slow mode enabled for single pixel, show a brief animation (demonstrative)
+            if (IsSlow("SetSinglePixel"))
+            {
+                pictureBox1.Refresh();
+                Thread.Sleep(200);
+            }
+            EndPerformanceMeasurement();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("SquareOutline");
+            ClearCanvas();
+            int x = 100, y = 100;
+            int size = 100;
+
+            bool slow = IsSlow("SquareOutline");
+
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x + i, y, Color.Red);
+                if (slow) { pictureBox1.Refresh(); Thread.Sleep(5); }
+            }
+
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x + size, y + i, Color.Red);
+                if (slow) { pictureBox1.Refresh(); Thread.Sleep(5); }
+            }
+
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x + i, y + size, Color.Red);
+                if (slow) { pictureBox1.Refresh(); Thread.Sleep(5); }
+            }
+
+            for (int i = 0; i <= size; i++)
+            {
+                bmp.SetPixel(x, y + i, Color.Red);
+                if (slow) { pictureBox1.Refresh(); Thread.Sleep(5); }
+            }
+
+            pictureBox1.Image = bmp;
+            EndPerformanceMeasurement();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("ThreeLines");
+            ClearCanvas();
+            int x = 100;
+            int y = 100;
+
+            bool slow = IsSlow("ThreeLines");
+
+            for (int i = 0; i < 100; i++)
+            {
+                bmp.SetPixel(x + i, y, Color.Red);
+                if (slow && i % 5 == 0) { pictureBox1.Refresh(); Thread.Sleep(8); }
+            }
+            for (int i = 0; i < 100; i++)
+            {
+                bmp.SetPixel(x, y + i, Color.Blue);
+                if (slow && i % 5 == 0) { pictureBox1.Refresh(); Thread.Sleep(8); }
+            }
+
+            for (int i = 0; i < 100; i++)
+            {
+                bmp.SetPixel(x + i, y + i, Color.Green);
+                if (slow && i % 3 == 0) { pictureBox1.Refresh(); Thread.Sleep(8); }
+            }
+
+            pictureBox1.Image = bmp;
+            EndPerformanceMeasurement();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("FilledSquare");
+            ClearCanvas();
+
+            int x = 100;
+            int y = 100;
+
+            bool slow = IsSlow("FilledSquare");
+
+            for (int i = 0; i < 100; i++)
+            {
+                for (int j = 0; j < 100; j++)
+                {
+                    bmp.SetPixel(x + i, y + j, Color.Red);
+                }
+                if (slow && i % 4 == 0)
+                {
+                    pictureBox1.Image = bmp;
+                    pictureBox1.Refresh();
+                    Thread.Sleep(6);
+                }
+            }
+            pictureBox1.Image = bmp;
+            EndPerformanceMeasurement();
+        }
+        //==============================================================================================================//
+        //المختبر الثاني
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("GradientBar");
+            ClearCanvas();
+            int x = 100;
+            int y = 100;
+
+            bool slow = IsSlow("GradientBar");
+
+            for (int ix = 0; ix < 255; ix++)
+            {
+                for (int iy = 0; iy < 20; iy++)
+                {
+                    bmp.SetPixel(x + ix, y + iy, Color.Red);
+                }
+                if (slow && ix % 8 == 0)
+                {
+                    pictureBox1.Image = bmp;
+                    pictureBox1.Refresh();
+                    Thread.Sleep(6);
+                }
+            }
+            pictureBox1.Image = bmp;
+            EndPerformanceMeasurement();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("RGBGradient");
+            ClearCanvas();
+            int x = 100;
+            int y = 100;
+
+            bool slow = IsSlow("RGBGradient");
+
+            for (int ix = 0; ix < 255; ix++)
+            {
+                for (int iy = 0; iy < 20; iy++)
+                {
+                    bmp.SetPixel(x + ix, y + iy, Color.FromArgb(ix, 0, 0));
+                }
+                if (slow && ix % 6 == 0)
+                {
+                    pictureBox1.Image = bmp;
+                    pictureBox1.Refresh();
+                    Thread.Sleep(6);
+                }
+            }
+            pictureBox1.Image = bmp;
+            EndPerformanceMeasurement();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("Line_SimpleSlope");
+            ClearCanvas();
+            float x1 = 50, y1 = 50;
+            float x2 = 300, y2 = 100;
+
+            float m = (y2 - y1) / (x2 - x1);
+            float b = y1 - (m * x1);
+
+            bool slow = IsSlow("Line_SimpleSlope");
+
+            for (float x = x1; x <= x2; x++)
+            {
+                float y = (m * x) + b;
+
+                bmp.SetPixel((int)x, (int)y, Color.Red);
+                if (slow && ((int)x % 5) == 0)
+                {
+                    pictureBox1.Image = bmp;
+                    pictureBox1.Refresh();
+                    Thread.Sleep(6);
+                }
+            }
+
+            pictureBox1.Image = bmp;
+            EndPerformanceMeasurement();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("Line_SteepSlope");
+            ClearCanvas();
+            float x1 = 50, y1 = 50;
+            float x2 = 100, y2 = 300;
+            float m = (y2 - y1) / (x2 - x1);
+            float b = y1 - (m * x1);
+
+            bool slow = IsSlow("Line_SteepSlope");
+
+            for (float x = x1; x <= x2; x++)
+            {
+                float y = (m * x) + b;
+                bmp.SetPixel((int)x, (int)y, Color.Red);
+                if (slow) { pictureBox1.Image = bmp; pictureBox1.Refresh(); Thread.Sleep(8); }
+            }
+            pictureBox1.Image = bmp;
+            EndPerformanceMeasurement();
+        }
+        //==============================================================================================================//
+        //المختبر الثالث
+        void RunDDA(int x1, int y1, int x2, int y2, Color color, Bitmap bmp, PictureBox pbox)
+        {
+            float dx = x2 - x1;
+            float dy = y2 - y1;
+            float steps = Math.Max(Math.Abs(dx), Math.Abs(dy));
+            float xInc = dx / steps;
+            float yInc = dy / steps;
+            float x = x1;
+            float y = y1;
+
+            bool slow = IsSlow("DDA");
+
+            for (int i = 0; i <= steps; i++)
+            {
+                int ix = (int)Math.Round(x);
+                int iy = (int)Math.Round(y);
+
+                if (ix >= 0 && ix < bmp.Width && iy >= 0 && iy < bmp.Height)
+                {
+                    bmp.SetPixel(ix, iy, color);
+                }
+
+                x += xInc;
+                y += yInc;
+
+                if (slow)
+                {
+                    Thread.Sleep(10);
+                    pbox.Image = bmp;
+                    pbox.Refresh();
+                }
+            }
+
+            if (!slow)
+            {
+                pbox.Image = bmp;
+            }
+        }
+        private void button12_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("DDA");
+            ClearCanvas();
+            RunDDA(50, 50, 100, 300, Color.Red, bmp, pictureBox1);
+            EndPerformanceMeasurement();
+        }
+        void RunBresenham(int x1, int y1, int x2, int y2, Color color, Bitmap bmp)
+        {
+            // This Bresenham implementation assumes x1 <= x2 for the simple loop as in original
+            int dx = Math.Abs(x2 - x1);
+            int dy = Math.Abs(y2 - y1);
+
+            int p = 2 * dy - dx;
+            int y = y1;
+
+            bool slow = IsSlow("Bresenham");
+
+            int sx = x1 < x2 ? 1 : -1;
+            int sy = y1 < y2 ? 1 : -1;
+            int err = dx - dy;
+            int x = x1;
+
+            while (true)
+            {
+                if (x >= 0 && x < bmp.Width && y >= 0 && y < bmp.Height)
+                    bmp.SetPixel(x, y, color);
+
+                if (x == x2 && y == y2) break;
+
+                int e2 = err * 2;
+                if (e2 > -dy) { err -= dy; x += sx; }
+                if (e2 < dx) { err += dx; y += sy; }
+
+                if (slow)
+                {
+                    pictureBox1.Image = bmp;
+                    pictureBox1.Refresh();
+                    Thread.Sleep(8);
+                }
+            }
+
+            pictureBox1.Image = bmp;
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("Bresenham");
+            ClearCanvas();
+            RunBresenham(50, 50, 400, 150, Color.Red, bmp);
+            EndPerformanceMeasurement();
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("DDA");
+            ClearCanvas();
+            RunDDA(200, 50, 150, 200, Color.Green, bmp, pictureBox1);
+
+            RunDDA(200, 50, 250, 200, Color.Green, bmp, pictureBox1);
+
+            RunDDA(150, 200, 250, 200, Color.Green, bmp, pictureBox1);
+            EndPerformanceMeasurement();
+        }
+        private void DrawLine(Bitmap bmp, int x1, int y1, int x2, int y2)
+        {
+            int dx = Math.Abs(x2 - x1);
+            int dy = Math.Abs(y2 - y1);
+            int sx = x1 < x2 ? 1 : -1;
+            int sy = y1 < y2 ? 1 : -1;
+            int err = dx - dy;
+
+            bool slow = IsSlow("DrawLineGeneric");
+
+            while (true)
+            {
+                if (x1 >= 0 && x1 < bmp.Width && y1 >= 0 && y1 < bmp.Height)
+                    bmp.SetPixel(x1, y1, Color.Black);
+
+                if (x1 == x2 && y1 == y2) break;
+                int e2 = err * 2;
+                if (e2 > -dy) { err -= dy; x1 += sx; }
+                if (e2 < dx) { err += dx; y1 += sy; }
+
+                if (slow)
+                {
+                    pictureBox1.Image = bmp;
+                    pictureBox1.Refresh();
+                    Thread.Sleep(6);
+                }
+            }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("DrawLineGeneric");
+            ClearCanvas();
+            DrawLine(bmp, 50, 150, 200, 150);
+            DrawLine(bmp, 50, 150, 50, 280);
+            DrawLine(bmp, 200, 150, 200, 280);
+            DrawLine(bmp, 50, 280, 200, 280);
+
+            DrawLine(bmp, 50, 150, 125, 80);
+            DrawLine(bmp, 200, 150, 125, 80);
+
+            DrawLine(bmp, 240, 230, 240, 280);
+            DrawLine(bmp, 260, 230, 260, 280);
+            DrawLine(bmp, 240, 280, 260, 280);
+
+            DrawLine(bmp, 220, 230, 250, 160);
+            DrawLine(bmp, 280, 230, 250, 160);
+            DrawLine(bmp, 220, 230, 280, 230);
+            pictureBox1.Image = bmp;
+            EndPerformanceMeasurement();
+        }
+        //==============================================================================================================//
+        //المختبر الرابع
+        private void RunStandardCircle(int xc, int yc, int r, Color color, Bitmap bmp)
+        {
+            bool slow = IsSlow("StandardCircle");
+
+            for (int x = 0; x <= r; x++)
+            {
+                double yCalc = Math.Sqrt((r * r) - (x * x));
+                int y = (int)Math.Round(yCalc);
+
+                if (xc + x >= 0 && xc + x < bmp.Width && yc + y >= 0 && yc + y < bmp.Height)
+                    bmp.SetPixel(xc + x, yc + y, color);
+                if (xc + x >= 0 && xc + x < bmp.Width && yc - y >= 0 && yc - y < bmp.Height)
+                    bmp.SetPixel(xc + x, yc - y, color);
+                if (xc - x >= 0 && xc - x < bmp.Width && yc + y >= 0 && yc + y < bmp.Height)
+                    bmp.SetPixel(xc - x, yc + y, color);
+                if (xc - x >= 0 && xc - x < bmp.Width && yc - y >= 0 && yc - y < bmp.Height)
+                    bmp.SetPixel(xc - x, yc - y, color);
+
+                if (slow)
+                {
+                    Thread.Sleep(10);
+                    pictureBox1.Refresh();
+                    pictureBox1.Image = bmp;
+                }
+            }
+            pictureBox1.Image = bmp;
+        }
+        private void button16_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("StandardCircle");
+            ClearCanvas();
+            RunStandardCircle(450, 250, 100, Color.Red, bmp);
+            EndPerformanceMeasurement();
+        }
+        private void RunPolarCircle(int xc, int yc, int r, Color color, Bitmap bmp)
+        {
+            bool slow = IsSlow("PolarCircle");
+
+            for (double theta = 0; theta <= 360; theta += 1)
+            {
+                double radian = theta * (Math.PI / 180.0);
+
+                int x = (int)Math.Round(r * Math.Cos(radian));
+                int y = (int)Math.Round(r * Math.Sin(radian));
+
+                if (xc + x >= 0 && xc + x < bmp.Width && yc + y >= 0 && yc + y < bmp.Height)
+                    bmp.SetPixel(xc + x, yc + y, color);
+
+                if (slow)
+                {
+                    Thread.Sleep(10);
+                    pictureBox1.Refresh();
+                    pictureBox1.Image = bmp;
+                }
+            }
+
+            pictureBox1.Image = bmp;
+        }
+        private void button14_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("PolarCircle");
+            ClearCanvas();
+            RunPolarCircle(450, 250, 100, Color.Blue, bmp);
+            EndPerformanceMeasurement();
+        }
+        private void Draw8Points(int xc, int yc, int x, int y, Color color,
+    Bitmap bmp)
+        {
+            // Safety checks added
+            void SafeSet(int sx, int sy)
+            {
+                if (sx >= 0 && sx < bmp.Width && sy >= 0 && sy < bmp.Height)
+                    bmp.SetPixel(sx, sy, color);
+            }
+
+            SafeSet(xc + x, yc + y);
+            SafeSet(xc - x, yc + y);
+            SafeSet(xc + x, yc - y);
+            SafeSet(xc - x, yc - y);
+            SafeSet(xc + y, yc + x);
+            SafeSet(xc - y, yc + x);
+            SafeSet(xc + y, yc - x);
+            SafeSet(xc - y, yc - x);
+            pictureBox1.Image = bmp;
+        }
+        private void RunMidpointCircle(int xc, int yc, int r, Color color, Bitmap bmp)
+        {
+            int x = 0;
+            int y = r;
+            int p = 1 - r;
+
+            bool slow = IsSlow("MidpointCircle");
+
+            while (x <= y)
+            {
+                Draw8Points(xc, yc, x, y, color, bmp);
+
+                if (slow)
+                {
+                    Thread.Sleep(15);
+                    pictureBox1.Refresh();
+                    pictureBox1.Image = bmp;
+                }
+                x++;
+
+                if (p < 0)
+                {
+                    p = p + (x << 1) + 1;
+                }
+                else
+                {
+                    y--;
+                    p = p + (x << 1) - (y << 1) + 1;
+                }
+            }
+            pictureBox1.Image = bmp;
+        }
+        private void button13_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("MidpointCircle");
+            ClearCanvas();
+            RunMidpointCircle(450, 250, 100, Color.Blue, bmp);
+            EndPerformanceMeasurement();
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("CompositeCircles");
+            ClearCanvas();
+            int xc = pictureBox1.Width / 2;
+            int yc = pictureBox1.Height / 2;
+
+            RunMidpointCircle(xc, yc, 120, Color.Black, bmp);
+            RunMidpointCircle(xc - 50, yc - 30, 25, Color.Blue, bmp);
+            RunMidpointCircle(xc - 50, yc - 30, 7, Color.Black, bmp);
+            RunMidpointCircle(xc + 50, yc - 30, 25, Color.Blue, bmp);
+            RunMidpointCircle(xc + 50, yc - 30, 7, Color.Black, bmp);
+            RunMidpointCircle(xc - 100, yc - 90, 45, Color.Gray, bmp);
+            RunMidpointCircle(xc + 100, yc - 90, 45, Color.Gray, bmp);
+            RunMidpointCircle(xc, yc + 60, 30, Color.Red, bmp);
+
+            pictureBox1.Image = bmp;
+            EndPerformanceMeasurement();
+        }
+        //==============================================================================================================//
+        //المختبر الخامس
+        void DrawShape(int x1, int y1, int x2, int y2, int x3, int y3, Color c, Bitmap bmp, PictureBox pbox)
+        {
+            RunDDA(x1, y1, x2, y2, c, bmp, pbox);
+            RunDDA(x2, y2, x3, y3, c, bmp, pbox);
+            RunDDA(x3, y3, x1, y1, c, bmp, pbox);
+        }
+        void DrawShape(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, Color c, Bitmap bmp, PictureBox pbox)
+        {
+            RunDDA(x1, y1, x2, y2, c, bmp, pbox);
+            RunDDA(x2, y2, x3, y3, c, bmp, pbox);
+            RunDDA(x3, y3, x4, y4, c, bmp, pbox);
+            RunDDA(x4, y4, x1, y1, c, bmp, pbox);
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            BeginPerformanceMeasurement("Shapes");
+            DrawShape(100, 200, 200, 100, 300, 200, Color.Blue, bmp, pictureBox1);
+
+            DrawShape(500, 100, 600, 150, 500, 300, 400, 150, Color.Red, bmp, pictureBox1);
+
+            pictureBox1.Image = bmp;
+            EndPerformanceMeasurement();
+        }
+        //==============================================================================================================//
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDrawing = true;
+            freehandPoints.Clear();
+            freehandPoints.Add(e.Location);
+
+            backupBmp = (Bitmap)bmp.Clone();
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            label6 .Text = $"X: {e.X}, Y: {e.Y}"; 
+            if (isDrawing)
+            {
+                freehandPoints.Add(e.Location); 
+
+                int lastIndex = freehandPoints.Count - 1;
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    Pen pen = new Pen(Color.Gray, 2);
+                    g.DrawLine(pen, freehandPoints[lastIndex - 1], freehandPoints[lastIndex]);
+                }
+                pictureBox1.Image = bmp;
+            }
+        }
+
+        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!isDrawing) return;
+            isDrawing = false;
+
+            bmp = (Bitmap)backupBmp.Clone(); 
+
+            if (freehandPoints.Count > 10)
+            {
+                Point startPt = freehandPoints.First();
+                Point endPt = freehandPoints.Last();
+                double distance = Math.Sqrt(Math.Pow(endPt.X - startPt.X, 2) + Math.Pow(endPt.Y - startPt.Y, 2));
+
+                if (distance > 50)
+                {
+                    DrawLine(bmp, startPt.X, startPt.Y, endPt.X, endPt.Y);
+                }
+                else
+                {
+                    int minX = freehandPoints.Min(p => p.X);
+                    int maxX = freehandPoints.Max(p => p.X);
+                    int minY = freehandPoints.Min(p => p.Y);
+                    int maxY = freehandPoints.Max(p => p.Y);
+
+                    int W = maxX - minX; 
+                    int H = maxY - minY; 
+
+                    int t = 30;
+
+                    bool hitTopLeft = freehandPoints.Any(p => Math.Abs(p.X - minX) < t && Math.Abs(p.Y - minY) < t);
+                    bool hitTopRight = freehandPoints.Any(p => Math.Abs(p.X - maxX) < t && Math.Abs(p.Y - minY) < t);
+                    bool hitTopMid = freehandPoints.Any(p => Math.Abs(p.X - (minX + W / 2)) < t && Math.Abs(p.Y - minY) < t);
+
+
+                    if (hitTopLeft && hitTopRight)
+                    {
+                        if (Math.Abs(W - H) < 40)
+                        {
+                            int size = Math.Max(W, H);
+                            DrawShape(minX, minY, minX + size, minY, minX + size, minY + size, minX, minY + size, Color.Green, bmp, pictureBox1);
+                        }
+                        else 
+                        {
+                            DrawShape(minX, minY, maxX, minY, maxX, maxY, minX, maxY, Color.Green, bmp, pictureBox1);
+                        }
+                    }
+                    else if (hitTopMid && !hitTopLeft && !hitTopRight)
+                    {
+                        DrawShape(minX + W / 2, minY, maxX, maxY, minX, maxY, Color.Orange, bmp, pictureBox1);
+                    }
+                    else
+                    {
+                        int r = Math.Max(W, H) / 2;
+                        RunMidpointCircle(minX + r, minY + r, r, Color.Blue, bmp);
+                    }
+                }
+            }
+            pictureBox1.Image = bmp;
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            ClearCanvas();
+        }
+
+        // Resource monitor stub class - replace implementation with real CPU probe later
+        private class ResourceMonitor
+        {
+            private CancellationTokenSource? cts;
+
+            public void Start(Action<string> updateCallback)
+            {
+                // Example structure: start a background task that periodically obtains CPU usage,
+                // then calls updateCallback($"CPU: {value}%").
+                // Implementation is left as a placeholder to be completed when integration is desired.
+                cts = new CancellationTokenSource();
+                var token = cts.Token;
+
+                Task.Run(async () =>
+                {
+                    while (!token.IsCancellationRequested)
+                    {
+                        // Placeholder: simulate data
+                        updateCallback?.Invoke("CPU: --% (monitor not yet implemented)");
+                        await Task.Delay(1000, token).ContinueWith(_ => { });
+                    }
+                }, token);
+            }
+
+            public void Stop()
+            {
+                try { cts?.Cancel(); } catch { }
+            }
+        }
+    }
+}
+

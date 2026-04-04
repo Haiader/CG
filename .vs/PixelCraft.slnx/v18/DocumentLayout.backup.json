@@ -1,0 +1,78 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Haiad\\Desktop\\PixelCraft\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|C:\\Users\\Haiad\\Desktop\\PixelCraft\\pixelcraft\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|solutionrelative:pixelcraft\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|c:\\users\\haiad\\desktop\\pixelcraft\\pixelcraft\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|solutionrelative:pixelcraft\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|c:\\users\\haiad\\desktop\\pixelcraft\\pixelcraft\\portraitrenderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|solutionrelative:pixelcraft\\portraitrenderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\Haiad\\Desktop\\PixelCraft\\PixelCraft\\Form1.cs",
+              "RelativeDocumentMoniker": "PixelCraft\\Form1.cs",
+              "ToolTip": "C:\\Users\\Haiad\\Desktop\\PixelCraft\\PixelCraft\\Form1.cs",
+              "RelativeToolTip": "PixelCraft\\Form1.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAYwEEAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T09:32:51.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PortraitRenderer.cs",
+              "DocumentMoniker": "C:\\Users\\Haiad\\Desktop\\PixelCraft\\PixelCraft\\PortraitRenderer.cs",
+              "RelativeDocumentMoniker": "PixelCraft\\PortraitRenderer.cs",
+              "ToolTip": "C:\\Users\\Haiad\\Desktop\\PixelCraft\\PixelCraft\\PortraitRenderer.cs",
+              "RelativeToolTip": "PixelCraft\\PortraitRenderer.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwAoAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-02T06:11:58.425Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Haiad\\Desktop\\PixelCraft\\PixelCraft\\Form1.cs",
+              "RelativeDocumentMoniker": "PixelCraft\\Form1.cs",
+              "ToolTip": "C:\\Users\\Haiad\\Desktop\\PixelCraft\\PixelCraft\\Form1.cs [Design]",
+              "RelativeToolTip": "PixelCraft\\Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-01T08:54:22.015Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

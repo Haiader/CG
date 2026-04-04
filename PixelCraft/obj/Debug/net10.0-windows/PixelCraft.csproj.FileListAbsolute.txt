@@ -1,0 +1,17 @@
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\bin\Debug\net10.0-windows\PixelCraft.exe
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\bin\Debug\net10.0-windows\PixelCraft.deps.json
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\bin\Debug\net10.0-windows\PixelCraft.runtimeconfig.json
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\bin\Debug\net10.0-windows\PixelCraft.dll
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\bin\Debug\net10.0-windows\PixelCraft.pdb
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\PixelCraft.Form1.resources
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\PixelCraft.csproj.GenerateResource.cache
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\PixelCraft.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\PixelCraft.AssemblyInfoInputs.cache
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\PixelCraft.AssemblyInfo.cs
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\PixelCraft.csproj.CoreCompileInputs.cache
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\PixelCraft.sourcelink.json
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\PixelCraft.dll
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\refint\PixelCraft.dll
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\PixelCraft.pdb
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\PixelCraft.genruntimeconfig.cache
+C:\Users\Haiad\Desktop\PixelCraft\PixelCraft\obj\Debug\net10.0-windows\ref\PixelCraft.dll

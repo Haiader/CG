@@ -1,0 +1,271 @@
+﻿using System;
+using System.Diagnostics;
+using System.Collections.Generic;
+
+namespace Lab_Code_s
+{
+    /// <summary>
+    /// Monitors and tracks CPU, execution time, and memory metrics for drawing algorithms.
+    /// Provides baseline comparison between slow-motion (Toggle ON) and direct rendering modes.
+    /// </summary>
+    public static class PerformanceMonitor
+    {
+        private static Dictionary<string, List<PerformanceSnapshot>> _metricsHistory = 
+            new Dictionary<string, List<PerformanceSnapshot>>(StringComparer.OrdinalIgnoreCase);
+
+        private static Process _currentProcess = Process.GetCurrentProcess();
+        private static PerformanceCounter _cpuCounter = null;
+
+        static PerformanceMonitor()
+        {
+            try
+            {
+                // Initialize CPU performance counter for current process
+                _cpuCounter = new PerformanceCounter(
+                    "Processor",
+                    "% Processor Time",
+                    "_Total",
+                    true);
+                // First call initializes the counter
+                _ = _cpuCounter.NextValue();
+            }
+            catch
+            {
+                // CPU counter may not be available on all systems; gracefully degrade
+                _cpuCounter = null;
+            }
+        }
+
+        /// <summary>
+        /// Begins performance measurement for an algorithm execution.
+        /// Returns a token to be passed to EndMeasurement() when execution completes.
+        /// </summary>
+        public static PerformanceMeasurementToken BeginMeasurement(string algorithmName, bool isSlowMode)
+        {
+            return new PerformanceMeasurementToken
+            {
+                AlgorithmName = algorithmName,
+                IsSlowMode = isSlowMode,
+                StartTime = Stopwatch.GetTimestamp(),
+                StartMemory = GC.GetTotalMemory(false)
+            };
+        }
+
+        /// <summary>
+        /// Ends performance measurement and records the snapshot.
+        /// </summary>
+        public static PerformanceSnapshot EndMeasurement(PerformanceMeasurementToken token)
+        {
+            long endMemory = GC.GetTotalMemory(false);
+            double elapsedMs = (Stopwatch.GetTimestamp() - token.StartTime) * 1000.0 / Stopwatch.Frequency;
+
+            float cpuUsage = GetCpuUsage();
+
+            var snapshot = new PerformanceSnapshot
+            {
+                AlgorithmName = token.AlgorithmName,
+                IsSlowMode = token.IsSlowMode,
+                ExecutionTimeMs = elapsedMs,
+                CpuPercent = cpuUsage,
+                MemoryBytes = Math.Max(0, endMemory - token.StartMemory),
+                CapturedAt = DateTime.Now
+            };
+
+            // Store in history
+            if (!_metricsHistory.ContainsKey(token.AlgorithmName))
+            {
+                _metricsHistory[token.AlgorithmName] = new List<PerformanceSnapshot>();
+            }
+            _metricsHistory[token.AlgorithmName].Add(snapshot);
+
+            return snapshot;
+        }
+
+        /// <summary>
+        /// Gets the current CPU usage percentage (0-100).
+        /// </summary>
+        private static float GetCpuUsage()
+        {
+            try
+            {
+                if (_cpuCounter != null)
+                {
+                    return _cpuCounter.NextValue();
+                }
+            }
+            catch { }
+            return 0f;
+        }
+
+        /// <summary>
+        /// Retrieves all snapshots for a specific algorithm.
+        /// </summary>
+        public static List<PerformanceSnapshot> GetMetrics(string algorithmName)
+        {
+            if (_metricsHistory.TryGetValue(algorithmName, out var list))
+            {
+                return new List<PerformanceSnapshot>(list);
+            }
+            return new List<PerformanceSnapshot>();
+        }
+
+        /// <summary>
+        /// Computes a performance comparison between slow-mode and fast-mode executions of an algorithm.
+        /// Returns a formatted string summarizing the performance delta.
+        /// </summary>
+        public static string GetPerformanceComparison(string algorithmName)
+        {
+            var metrics = GetMetrics(algorithmName);
+
+            var slowMetrics = new List<PerformanceSnapshot>();
+            var fastMetrics = new List<PerformanceSnapshot>();
+
+            foreach (var m in metrics)
+            {
+                if (m.IsSlowMode)
+                    slowMetrics.Add(m);
+                else
+                    fastMetrics.Add(m);
+            }
+
+            if (slowMetrics.Count == 0 || fastMetrics.Count == 0)
+                return $"{algorithmName}: Insufficient data (need both SLOW and FAST runs)";
+
+            double avgSlowTime = AverageExecutionTime(slowMetrics);
+            double avgFastTime = AverageExecutionTime(fastMetrics);
+            float avgSlowCpu = AverageCpuUsage(slowMetrics);
+            float avgFastCpu = AverageCpuUsage(fastMetrics);
+
+            double timeRatio = avgSlowTime > 0 ? avgSlowTime / avgFastTime : 0;
+            double cpuDelta = avgSlowCpu - avgFastCpu;
+
+            return FormatComparison(algorithmName, avgSlowTime, avgFastTime, timeRatio, 
+                                    avgSlowCpu, avgFastCpu, cpuDelta);
+        }
+
+        /// <summary>
+        /// Computes the average execution time across snapshots.
+        /// </summary>
+        private static double AverageExecutionTime(List<PerformanceSnapshot> snapshots)
+        {
+            if (snapshots.Count == 0) return 0;
+            double sum = 0;
+            foreach (var s in snapshots)
+                sum += s.ExecutionTimeMs;
+            return sum / snapshots.Count;
+        }
+
+        /// <summary>
+        /// Computes the average CPU usage across snapshots.
+        /// </summary>
+        private static float AverageCpuUsage(List<PerformanceSnapshot> snapshots)
+        {
+            if (snapshots.Count == 0) return 0;
+            float sum = 0;
+            foreach (var s in snapshots)
+                sum += s.CpuPercent;
+            return sum / snapshots.Count;
+        }
+
+        /// <summary>
+        /// Formats a comprehensive performance comparison string for display.
+        /// </summary>
+        private static string FormatComparison(string algo, double slowTime, double fastTime, 
+                                               double timeRatio, float slowCpu, float fastCpu, double cpuDelta)
+        {
+            string modeInfo = $"{algo}\n";
+            modeInfo += $"?????????????????????\n";
+            modeInfo += $"SLOW: {slowTime:F2}ms | {slowCpu:F1}%\n";
+            modeInfo += $"FAST: {fastTime:F2}ms | {fastCpu:F1}%\n";
+            modeInfo += $"?????????????????????\n";
+            modeInfo += $"Ratio: {timeRatio:F2}x slower\n";
+            modeInfo += $"CPU ?: {(cpuDelta >= 0 ? "+" : "")}{cpuDelta:F1}%\n";
+
+            return modeInfo;
+        }
+
+        /// <summary>
+        /// Clears all recorded metrics for a fresh start.
+        /// </summary>
+        public static void ClearMetrics(string algorithmName = null)
+        {
+            if (algorithmName == null)
+            {
+                _metricsHistory.Clear();
+            }
+            else if (_metricsHistory.ContainsKey(algorithmName))
+            {
+                _metricsHistory[algorithmName].Clear();
+            }
+        }
+
+        /// <summary>
+        /// Gets the latest snapshot for an algorithm.
+        /// </summary>
+        public static PerformanceSnapshot GetLatestSnapshot(string algorithmName)
+        {
+            var metrics = GetMetrics(algorithmName);
+            if (metrics.Count > 0)
+                return metrics[metrics.Count - 1];
+            return null;
+        }
+
+        /// <summary>
+        /// Generates a summary report of all recorded metrics.
+        /// </summary>
+        public static string GetSummaryReport()
+        {
+            var report = "??????????????????????????????????????????\n";
+            report += "?     PERFORMANCE METRICS SUMMARY        ?\n";
+            report += "??????????????????????????????????????????\n";
+
+            if (_metricsHistory.Count == 0)
+            {
+                report += "No metrics recorded yet.\n";
+                return report;
+            }
+
+            foreach (var kvp in _metricsHistory)
+            {
+                string algoName = kvp.Key;
+                var snapshots = kvp.Value;
+
+                report += $"\n{algoName}:\n";
+                report += $"  Executions: {snapshots.Count}\n";
+
+                double avgTime = AverageExecutionTime(snapshots);
+                float avgCpu = AverageCpuUsage(snapshots);
+
+                report += $"  Avg Time: {avgTime:F2}ms\n";
+                report += $"  Avg CPU: {avgCpu:F1}%\n";
+
+                // Show mode breakdown if both modes executed
+                var slowRuns = snapshots.FindAll(s => s.IsSlowMode);
+                var fastRuns = snapshots.FindAll(s => !s.IsSlowMode);
+
+                if (slowRuns.Count > 0 && fastRuns.Count > 0)
+                {
+                    double slowAvgTime = AverageExecutionTime(slowRuns);
+                    double fastAvgTime = AverageExecutionTime(fastRuns);
+                    report += $"  SLOW Avg: {slowAvgTime:F2}ms (n={slowRuns.Count})\n";
+                    report += $"  FAST Avg: {fastAvgTime:F2}ms (n={fastRuns.Count})\n";
+                    report += $"  Ratio: {(fastAvgTime > 0 ? slowAvgTime / fastAvgTime : 0):F2}x\n";
+                }
+            }
+
+            return report;
+        }
+    }
+
+    /// <summary>
+    /// Token representing an active performance measurement session.
+    /// Passed to BeginMeasurement() and EndMeasurement() to correlate metric start/end points.
+    /// </summary>
+    public class PerformanceMeasurementToken
+    {
+        public string AlgorithmName { get; set; }
+        public bool IsSlowMode { get; set; }
+        public long StartTime { get; set; }
+        public long StartMemory { get; set; }
+    }
+}

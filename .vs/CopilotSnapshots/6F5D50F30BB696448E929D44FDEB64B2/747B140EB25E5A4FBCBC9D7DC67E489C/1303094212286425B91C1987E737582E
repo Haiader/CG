@@ -1,0 +1,158 @@
+﻿# Quick Start: Using Performance Monitoring
+
+## What's New?
+
+The Graphics Lab now automatically measures and displays CPU performance metrics for every drawing algorithm. This helps you understand:
+
+- How fast each algorithm runs (in milliseconds)
+- How much CPU it uses
+- How much slower the step-by-step animation is compared to instant rendering
+- Memory allocation during execution
+
+## How to Use
+
+### 1. Run an Algorithm (e.g., DDA)
+1. **Ensure Toggle is OFF** (Fast mode) - look at the checkbox next to the button
+2. Click the **DDA (button12)** button
+3. A vertical line is drawn instantly on the canvas
+4. Check the **PERFORMANCE METRICS** label on the right side of the screen
+
+### 2. Enable Slow-Motion and Run Again
+1. **Check the Toggle** next to DDA button
+2. Click the **DDA (button12)** button again
+3. Watch the line draw step-by-step (slowly)
+4. The **PERFORMANCE METRICS** label updates with new data
+
+### 3. View the Comparison
+Once you've run the same algorithm in both FAST and SLOW modes:
+- The metrics label shows a **"SLOW vs FAST Comparison"** section
+- It tells you:
+  - **Ratio**: How many times slower the animation is (e.g., "14.31x slower")
+  - **CPU ?**: How much more CPU the animation uses (e.g., "+9.9%")
+
+## Example: Reading the Metrics Display
+
+```
+PERFORMANCE METRICS
+???????????????????????????????????
+
+Algorithm: DDA
+Mode: FAST (Direct)
+
+Last Execution:
+  Time:   8.76 ms
+  CPU:    5.3 %
+  Memory: 0.001 MB
+
+SLOW vs FAST Comparison:
+DDA
+?????????????????????
+SLOW: 125.43ms | 15.2%
+FAST: 8.76ms | 5.3%
+?????????????????????
+Ratio: 14.31x slower
+CPU ?: +9.9%
+
+[Double-click to copy]
+```
+
+**What This Means:**
+- The FAST (instant) DDA took 8.76 milliseconds
+- The SLOW (animated) DDA took 125.43 milliseconds
+- That's **14.31 times slower**—but you get to see every step!
+- The animated version used **9.9% more CPU** due to screen refreshes
+
+## Try These Algorithms
+
+All algorithms have been pre-integrated with performance monitoring:
+
+| Button | Algorithm | What It Does |
+|--------|-----------|-------------|
+| button1 | Set Single Pixel | Sets one red pixel |
+| button3 | Square Outline | Draws a hollow square |
+| button4 | Three Lines | Draws 3 colored lines |
+| button2 | Filled Square | Fills a square with red |
+| button5 | Line (Shallow) | Draws a diagonal line |
+| button6 | RGB Gradient | Shows color gradient |
+| button7 | Line (Steep) | Draws a vertical-ish line |
+| button8 | Gradient Bar | Red bar from 0-255 |
+| button9 | Triangle (DDA) | Draws triangle with DDA |
+| button10 | Bresenham Line | Draws line using Bresenham |
+| button11 | Complex Shape | Multiple lines (House) |
+| button12 | DDA Line | Draws line with DDA |
+| button13 | Midpoint Circle | Circle using Midpoint algo |
+| button14 | Polar Circle | Circle using Polar coords |
+| button15 | Composite | Complex shape (Face!) |
+| button16 | Standard Circle | Circle using sqrt |
+| button20 | Shapes | Multiple triangles |
+
+## Recommended Experiments
+
+### Experiment 1: Find the Slowest Algorithm
+1. Click each button with the toggle **OFF** and note the times
+2. Find which one is slowest in FAST mode (highest ms)
+3. That algorithm will benefit most from step-by-step visualization
+
+### Experiment 2: Compare Animation Overhead
+1. Pick an algorithm (e.g., "Midpoint Circle")
+2. Toggle **OFF** ? Click button ? Note time
+3. Toggle **ON** ? Click button ? Watch animation
+4. Check ratio: How many times slower was the animation?
+5. High ratio (10x+) = Complex algorithm with many steps = Great for learning!
+
+### Experiment 3: Understand CPU Impact
+1. Click an algorithm with toggle **OFF** (low CPU expected)
+2. Click the same algorithm with toggle **ON** (higher CPU expected)
+3. The CPU ? shows how much more the screen refreshes cost
+4. This is the "price" of beautiful step-by-step visualization
+
+## Copying Results
+
+1. **Single Metric**: Double-click the PERFORMANCE METRICS label
+2. Text is copied to clipboard
+3. Paste into Notepad, Word, or Excel for documentation
+
+## Tips & Tricks
+
+- **First run after startup** may show slightly different timings (system warm-up)
+- **Multiple runs** help smooth out variance from system activities
+- **The label is selectable** — you can highlight and copy individual values
+- **Larger algorithms** (filled squares, complex shapes) show more dramatic slow-down ratios
+- **Simple algorithms** (single pixel) may show overhead due to per-frame refresh cost
+
+## What If I Don't See Metrics?
+
+1. **Check the right side** of the window — the label might be below the fold
+2. **Make sure you clicked a button** — measurements only appear after execution
+3. **Try a "slower" algorithm** first, like "Filled Square" — it's easier to see
+
+## Getting More Detailed Data
+
+If you want to see a full report of all metrics collected:
+
+**For developers:** Call this in Visual Studio Immediate Window:
+```csharp
+MessageBox.Show(PerformanceMonitor.GetSummaryReport());
+```
+
+This shows a summary of all algorithms you've tested, with execution counts and averages.
+
+## Understanding the Algorithms
+
+Each algorithm uses a different mathematical approach to draw lines and circles:
+
+- **DDA (Digital Differential Analyzer)**: Incremental approach, great for teaching
+- **Bresenham**: Integer-only arithmetic, very efficient
+- **Midpoint Circle**: Decision-parameter method for circles
+- **Polar Coordinates**: Parametric approach using sin/cos
+- **Standard Circle**: Mathematical sqrt approach
+
+The performance monitoring helps you see which are faster!
+
+## Questions?
+
+See `PERFORMANCE_MONITORING_GUIDE.md` for comprehensive technical documentation.
+
+---
+
+**Happy visualizing! ??**
