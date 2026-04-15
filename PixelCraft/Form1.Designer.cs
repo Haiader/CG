@@ -36,10 +36,14 @@
             btnDrawPortrait_Click = new Button();
             chkSlowMotion = new CheckBox();
             tableLayoutPanel1 = new TableLayoutPanel();
+            button21 = new Button();
+            label7 = new Label();
+            button19 = new Button();
             label1 = new Label();
             button1 = new Button();
             button20 = new Button();
             label5 = new Label();
+            button18 = new Button();
             label2 = new Label();
             button8 = new Button();
             button16 = new Button();
@@ -62,11 +66,17 @@
             panel3 = new Panel();
             panel4 = new Panel();
             panel5 = new Panel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            button24 = new Button();
+            button23 = new Button();
+            button22 = new Button();
+            button25 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -88,7 +98,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(511, 18);
+            label6.Location = new Point(673, 16);
             label6.Name = "label6";
             label6.Size = new Size(30, 15);
             label6.TabIndex = 24;
@@ -119,7 +129,7 @@
             // 
             // btnDrawPortrait_Click
             // 
-            btnDrawPortrait_Click.Location = new Point(504, 68);
+            btnDrawPortrait_Click.Location = new Point(666, 66);
             btnDrawPortrait_Click.Name = "btnDrawPortrait_Click";
             btnDrawPortrait_Click.Size = new Size(89, 23);
             btnDrawPortrait_Click.TabIndex = 26;
@@ -130,7 +140,7 @@
             // chkSlowMotion
             // 
             chkSlowMotion.AutoSize = true;
-            chkSlowMotion.Location = new Point(601, 40);
+            chkSlowMotion.Location = new Point(763, 38);
             chkSlowMotion.Name = "chkSlowMotion";
             chkSlowMotion.Size = new Size(79, 19);
             chkSlowMotion.TabIndex = 48;
@@ -139,16 +149,21 @@
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.ColumnCount = 5;
+            tableLayoutPanel1.ColumnCount = 6;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel1.Controls.Add(button21, 5, 1);
+            tableLayoutPanel1.Controls.Add(label7, 5, 0);
+            tableLayoutPanel1.Controls.Add(button19, 4, 5);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(button1, 0, 1);
             tableLayoutPanel1.Controls.Add(button20, 4, 1);
             tableLayoutPanel1.Controls.Add(label5, 4, 0);
+            tableLayoutPanel1.Controls.Add(button18, 4, 4);
             tableLayoutPanel1.Controls.Add(label2, 1, 0);
             tableLayoutPanel1.Controls.Add(button8, 1, 1);
             tableLayoutPanel1.Controls.Add(button16, 3, 1);
@@ -177,8 +192,37 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.Size = new Size(479, 185);
+            tableLayoutPanel1.Size = new Size(598, 185);
             tableLayoutPanel1.TabIndex = 47;
+            // 
+            // button21
+            // 
+            button21.Location = new Point(478, 18);
+            button21.Name = "button21";
+            button21.Size = new Size(89, 23);
+            button21.TabIndex = 50;
+            button21.Text = "سيارة";
+            button21.UseVisualStyleBackColor = true;
+            button21.Click += button21_Click;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(478, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(35, 15);
+            label7.TabIndex = 50;
+            label7.Text = "Lab 6";
+            // 
+            // button19
+            // 
+            button19.Location = new Point(383, 77);
+            button19.Name = "button19";
+            button19.Size = new Size(89, 23);
+            button19.TabIndex = 49;
+            button19.Text = "خماسي";
+            button19.UseVisualStyleBackColor = true;
+            button19.Click += button19_Click;
             // 
             // label1
             // 
@@ -219,6 +263,16 @@
             label5.Size = new Size(35, 15);
             label5.TabIndex = 45;
             label5.Text = "Lab 5";
+            // 
+            // button18
+            // 
+            button18.Location = new Point(383, 48);
+            button18.Name = "button18";
+            button18.Size = new Size(89, 23);
+            button18.TabIndex = 46;
+            button18.Text = "خماسي";
+            button18.UseVisualStyleBackColor = true;
+            button18.Click += button18_Click;
             // 
             // label2
             // 
@@ -414,7 +468,7 @@
             // 
             // button17
             // 
-            button17.Location = new Point(504, 36);
+            button17.Location = new Point(666, 34);
             button17.Margin = new Padding(3, 2, 3, 2);
             button17.Name = "button17";
             button17.Size = new Size(89, 26);
@@ -426,13 +480,14 @@
             // panel3
             // 
             panel3.Dock = DockStyle.Bottom;
-            panel3.Location = new Point(0, 262);
+            panel3.Location = new Point(0, 377);
             panel3.Name = "panel3";
-            panel3.Size = new Size(307, 280);
+            panel3.Size = new Size(307, 165);
             panel3.TabIndex = 1;
             // 
             // panel4
             // 
+            panel4.Controls.Add(tableLayoutPanel2);
             panel4.Controls.Add(panel5);
             panel4.Controls.Add(panel3);
             panel4.Dock = DockStyle.Right;
@@ -449,6 +504,85 @@
             panel5.Size = new Size(307, 225);
             panel5.TabIndex = 0;
             // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33333F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
+            tableLayoutPanel2.Controls.Add(button24, 0, 0);
+            tableLayoutPanel2.Controls.Add(button22, 1, 0);
+            tableLayoutPanel2.Controls.Add(button25, 1, 1);
+            tableLayoutPanel2.Controls.Add(button23, 2, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(0, 225);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 2;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel2.Size = new Size(307, 152);
+            tableLayoutPanel2.TabIndex = 4;
+            // 
+            // button24
+            // 
+            button24.Dock = DockStyle.Fill;
+            button24.Font = new Font("Segoe UI", 26F);
+            button24.Location = new Point(3, 3);
+            button24.Name = "button24";
+            tableLayoutPanel2.SetRowSpan(button24, 2);
+            button24.Size = new Size(96, 146);
+            button24.TabIndex = 2;
+            button24.Text = "←";
+            button24.UseVisualStyleBackColor = true;
+            button24.Click += button24_Click;
+            // 
+            // button23
+            // 
+            button23.Dock = DockStyle.Fill;
+            button23.Font = new Font("Segoe UI", 26F);
+            button23.Location = new Point(207, 3);
+            button23.Name = "button23";
+            tableLayoutPanel2.SetRowSpan(button23, 2);
+            button23.Size = new Size(97, 146);
+            button23.TabIndex = 1;
+            button23.Text = "→";
+            button23.UseVisualStyleBackColor = true;
+            button23.Click += button23_Click;
+            // 
+            // button22
+            // 
+            button22.Dock = DockStyle.Fill;
+            button22.Font = new Font("Segoe UI", 26F);
+            button22.Location = new Point(105, 3);
+            button22.Name = "button22";
+            button22.Size = new Size(96, 70);
+            button22.TabIndex = 0;
+            button22.Text = "↑";
+            button22.UseVisualStyleBackColor = true;
+            button22.Click += button22_Click;
+            // 
+            // button25
+            // 
+            button25.Dock = DockStyle.Fill;
+            button25.Font = new Font("Segoe UI", 26F);
+            button25.Location = new Point(105, 79);
+            button25.Name = "button25";
+            button25.Size = new Size(96, 70);
+            button25.TabIndex = 3;
+            button25.Text = "↓";
+            button25.UseVisualStyleBackColor = true;
+            button25.Click += button25_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -464,6 +598,7 @@
             Name = "Form1";
             Text = "CG (Computer Graphics)";
             WindowState = FormWindowState.Maximized;
+            Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -472,6 +607,7 @@
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             panel4.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -510,5 +646,14 @@
         private Button button12;
         private CheckBox chkSlowMotion;
         private Button btnDrawPortrait_Click;
+        private Button button18;
+        private Button button19;
+        private Button button21;
+        private Label label7;
+        private TableLayoutPanel tableLayoutPanel2;
+        private Button button24;
+        private Button button22;
+        private Button button25;
+        private Button button23;
     }
 }

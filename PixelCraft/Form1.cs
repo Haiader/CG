@@ -583,21 +583,71 @@ namespace PixelCraft
             UpdateMetrics("Face");
         }
 
-        // «·„Œ »— «·Œ«„”
+        // ============= «·„Œ »— «·Œ«„” ================
+        //overload for triangle
+        void DrawShape(Point p1, Point p2, Point p3, Color c)
+        {
+            RunDDA(p1.X, p1.Y, p2.X, p2.Y, Color.Green); // «·÷·⁄ «√·Ê· 
+            RunDDA(p2.X, p2.Y, p3.X, p3.Y, Color.Green); // «·÷·⁄ «·À«‰Ì 
+            RunDDA(p3.X, p3.Y, p1.X, p1.Y, Color.Green); //  «·÷·⁄ «·À«·À 
+        }
+        // overload for quadrilateral 
+        void DrawShape(Point p1, Point p2, Point p3, Point p4, Color c)
+        {
+            RunDDA(p1.X, p1.Y, p2.X, p2.Y, Color.Red); // «·÷·⁄ «√·Ê· 
+            RunDDA(p2.X, p2.Y, p3.X, p3.Y, Color.Red); // «·÷·⁄ «·À«‰Ì 
+            RunDDA(p3.X, p3.Y, p4.X, p4.Y, Color.Red); //  «·÷·⁄ «·À«·À 
+            RunDDA(p4.X, p4.Y, p1.X, p1.Y, Color.Red); //  «·÷·⁄ «·—«»⁄
+        }
+
+        void DrawShape(Color c, params Point[] points)
+        {
+            drawTimer.Restart();
+            pixelCount = 0;
+            ClearCanvas();
+
+            // «· √ﬂœ √‰ «·‰ﬁ«ÿ ⁄·Ï «·√ﬁ· 3 ·—”„ ‘ﬂ· „€·ﬁ
+            if (points.Length < 3) return;
+
+            for (int i = 0; i < points.Length; i++)
+            {
+                // «·‰ﬁÿ… «·Õ«·Ì…
+                Point current = points[i];
+
+                // «·‰ﬁÿ… «· «·Ì… (Ê≈–« Ê’·‰« ·¬Œ— ‰ﬁÿ…° ‰—»ÿÂ« »√Ê· ‰ﬁÿ… Õ Ï Ì€·ﬁ «·‘ﬂ·)
+                Point next = points[(i + 1) % points.Length];
+
+                // «” œ⁄«¡ œ«·… «·—”„ „«· ﬂ
+                RunDDA(current.X, current.Y, next.X, next.Y, c);
+                pixelCount++;
+            }
+            pictureBox1.Image = bmp;
+            pictureBox1.Refresh();
+            drawTimer.Stop();
+            UpdateMetrics($"Shape with {points.Length} points");
+        }
         private void button20_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
             ClearCanvas();
 
-            RunDDA(100, 200, 200, 100, Color.Blue);
-            RunDDA(200, 100, 300, 200, Color.Blue);
-            RunDDA(300, 200, 100, 200, Color.Blue);
+            //RunDDA(100, 200, 200, 100, Color.Blue);
+            //RunDDA(200, 100, 300, 200, Color.Blue);
+            //RunDDA(300, 200, 100, 200, Color.Blue);
 
-            RunDDA(500, 100, 600, 150, Color.Red);
-            RunDDA(600, 150, 500, 300, Color.Red);
-            RunDDA(500, 300, 400, 150, Color.Red);
-            RunDDA(400, 150, 500, 100, Color.Red);
+            DrawShape(new Point(100, 200),
+                      new Point(200, 100),
+                      new Point(300, 200), Color.Green);
+
+            //RunDDA(500, 100, 600, 150, Color.Red);
+            //RunDDA(600, 150, 500, 300, Color.Red);
+            //RunDDA(500, 300, 400, 150, Color.Red);
+            //RunDDA(400, 150, 500, 100, Color.Red);
+            DrawShape(new Point(500, 100),
+                      new Point(600, 150),
+                      new Point(500, 300),
+                      new Point(400, 150), Color.Red);
 
             pictureBox1.Image = bmp;
             pictureBox1.Refresh();
@@ -672,7 +722,7 @@ namespace PixelCraft
             PortraitRenderer renderer = new PortraitRenderer(this, ApplyDelay);
 
             //  √ﬂœ „‰ Ê÷⁄ „”«— «·’Ê—… «·’ÕÌÕ Â‰«
-            renderer.DrawPortraitSlowly(@"C:\Users\Haiad\Desktop\img\1.jpg");
+            renderer.DrawPortraitSlowly(@"D:\PixelCraft\img\1.jpg");
 
             // copy the count from renderer to form-level pixelCount for metrics
             pixelCount = renderer.PixelCount;
@@ -680,6 +730,92 @@ namespace PixelCraft
             drawTimer.Stop();
             UpdateMetrics("Portrait Drawing");
         }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+
+            // —”„ ‘ﬂ· Œ„«”Ì (5 ‰ﬁ«ÿ)
+            DrawShape(Color.Red,
+                new Point(200, 100),
+                new Point(300, 150),
+                new Point(250, 270),
+                new Point(150, 270),
+                new Point(100, 150));
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            // —”„ ‘ﬂ· ”œ«”Ì (6 ‰ﬁ«ÿ)
+            DrawShape(Color.Red,
+                    new Point(150, 100),
+                    new Point(250, 100),
+                    new Point(300, 150),
+                    new Point(250, 270),
+                    new Point(150, 270),
+                    new Point(100, 150));
+        }
+        PointF[] myShape = new PointF[3];
+        private void DrawMyShape()
+        {
+            Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            Graphics g = Graphics.FromImage(bmp);
+
+            g.Clear(Color.White);
+
+            g.DrawPolygon(Pens.Blue, myShape);
+
+            pictureBox1.Image = bmp; // «ﬂ » «”„  «·»ﬂÃ— »Êﬂ” «·Œ«’ »ﬂ 
+        }
+        private void button21_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            myShape[0] = new PointF(50, 50);   //  «·‰ﬁÿ… «√·Ê·Ï 
+            myShape[1] = new PointF(150, 50);  //  «·‰ﬁÿ… «·À«‰Ì… 
+            myShape[2] = new PointF(100, 150); // )«·‰ﬁÿ… «·À«·À… («·—√”  «·”›·Ì 
+
+            DrawMyShape();
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            float tx = 20;
+            myShape[0].X += tx;
+            myShape[1].X += tx;
+            myShape[2].X += tx;
+
+            DrawMyShape();
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            float ty = 10;
+            myShape[0].Y += ty;
+            myShape[1].Y += ty;
+            myShape[2].Y += ty;
+            DrawMyShape();
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            float ty = 10;
+            myShape[0].Y -= ty;
+            myShape[1].Y -= ty;
+            myShape[2].Y -= ty;
+            DrawMyShape();
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            float tx = 20;
+            myShape[0].X -= tx;
+            myShape[1].X -= tx;
+            myShape[2].X -= tx;
+
+            DrawMyShape();
+        }
     }
 }
-

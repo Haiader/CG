@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Karbala\\PixelCraft\\PixelCraft.csproj": {}
+    "D:\\PixelCraft\\PixelCraft\\PixelCraft.csproj": {}
   },
   "projects": {
-    "D:\\Karbala\\PixelCraft\\PixelCraft.csproj": {
+    "D:\\PixelCraft\\PixelCraft\\PixelCraft.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Karbala\\PixelCraft\\PixelCraft.csproj",
+        "projectUniqueName": "D:\\PixelCraft\\PixelCraft\\PixelCraft.csproj",
         "projectName": "PixelCraft",
-        "projectPath": "D:\\Karbala\\PixelCraft\\PixelCraft.csproj",
+        "projectPath": "D:\\PixelCraft\\PixelCraft\\PixelCraft.csproj",
         "packagesPath": "C:\\Users\\Haiad\\.nuget\\packages\\",
-        "outputPath": "D:\\Karbala\\PixelCraft\\obj\\",
+        "outputPath": "D:\\PixelCraft\\PixelCraft\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
