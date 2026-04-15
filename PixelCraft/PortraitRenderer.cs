@@ -75,8 +75,9 @@ namespace PixelCraft
                     _applyDelayMethod();
                 }
             }
-            // تحديث أخير بعد انتهاء الطبقة
             _applyDelayMethod();
+
+            _mainForm.pictureBox1.Refresh();
         }
     }
 }

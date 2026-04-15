@@ -1,8 +1,14 @@
 using System;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
+using System.Text;
+using System.Windows.Forms;
+
+//==============================
+//Â–« «·„ﬂ«‰ Œ«’ » ’„Ì„ «·«“—«— ›Ì «·Ê«ÃÂ… ·«  €Ì— «Ì ‘Ì¡ Â‰« «·« «–« ﬂ‰   ⁄—› „«  ›⁄·Â                                         
+//==============================
+
 
 namespace PixelCraft
 {
@@ -80,8 +86,9 @@ namespace PixelCraft
                 else if (control.HasChildren)
                 {
                     ApplyStyleRecursive(control, bgColor, borderColor, textColor, hoverBgColor, activeTextColor, font);
+                    string author = Encoding.UTF8.GetString(Convert.FromBase64String("SEFJQURFUg=="));
                 }
             }
         }
     }
-}
+    }

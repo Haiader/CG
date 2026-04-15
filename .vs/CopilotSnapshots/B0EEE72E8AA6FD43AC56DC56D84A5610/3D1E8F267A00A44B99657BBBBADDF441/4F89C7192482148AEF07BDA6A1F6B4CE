@@ -1,4 +1,4 @@
-global using System.Drawing;
+ï»¿global using System.Drawing;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
@@ -14,7 +14,6 @@ namespace PixelCraft
     public partial class Form1 : Form
     {
 
-        
         public Bitmap bmp;
         bool isDrawing = false;
         List<Point> freehandPoints = new List<Point>();
@@ -24,14 +23,9 @@ namespace PixelCraft
         private long pixelCount = 0;
         private Stopwatch drawTimer = new Stopwatch();
 
-        private float carScale = 1.0f;
-        private int carX = 100;
-        private int carY = 100;
-
         public Form1()
         {
             InitializeComponent();
-            
             bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
             using (Graphics g = Graphics.FromImage(bmp))
@@ -76,7 +70,7 @@ namespace PixelCraft
 
         private void ClearCanvas()
         {
-            // ÅĞÇ ÊÛíÑ ÍÌã ÇáÈßÊÔÑ ÈæßÓ¡ äÍÊÇÌ ÈäÇÁ ÈíÊãÇÈ ÌÏíÏ
+            // Ø¥Ø°Ø§ ØªØºÙŠØ± Ø­Ø¬Ù… Ø§Ù„Ø¨ÙƒØªØ´Ø± Ø¨ÙˆÙƒØ³ØŒ Ù†Ø­ØªØ§Ø¬ Ø¨Ù†Ø§Ø¡ Ø¨ÙŠØªÙ…Ø§Ø¨ Ø¬Ø¯ÙŠØ¯
             if (bmp == null || bmp.Width != pictureBox1.Width || bmp.Height != pictureBox1.Height)
             {
                 bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
@@ -91,18 +85,18 @@ namespace PixelCraft
 
         private void ApplyDelay()
         {
-            // ÇáÊÃßÏ ãä Ãä ÇáãÓÊÎÏã ÇÎÊÇÑ ÇáÑÓã ÇáÈØíÁ
+            // Ø§Ù„ØªØ£ÙƒØ¯ Ù…Ù† Ø£Ù† Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù… Ø§Ø®ØªØ§Ø± Ø§Ù„Ø±Ø³Ù… Ø§Ù„Ø¨Ø·ÙŠØ¡
             if (chkSlowMotion.Checked)
             {
-                // ÊÍÏíË ÕæÑÉ ÇáÈßÊÔÑ ÈæßÓ İæÑÇğ áÚÑÖ ÇáÈßÓá ÇáÌÏíÏ
+                // ØªØ­Ø¯ÙŠØ« ØµÙˆØ±Ø© Ø§Ù„Ø¨ÙƒØªØ´Ø± Ø¨ÙˆÙƒØ³ ÙÙˆØ±Ø§Ù‹ Ù„Ø¹Ø±Ø¶ Ø§Ù„Ø¨ÙƒØ³Ù„ Ø§Ù„Ø¬Ø¯ÙŠØ¯
                 pictureBox1.Refresh();
-                // ÊÃÎíÑ áãÏÉ 5 ãáí ËÇäíÉ (íãßäß ÊÛííÑ ÇáÑŞã áÒíÇÏÉ ÇáÈØÁ)
+                // ØªØ£Ø®ÙŠØ± Ù„Ù…Ø¯Ø© 5 Ù…Ù„ÙŠ Ø«Ø§Ù†ÙŠØ© (ÙŠÙ…ÙƒÙ†Ùƒ ØªØºÙŠÙŠØ± Ø§Ù„Ø±Ù‚Ù… Ù„Ø²ÙŠØ§Ø¯Ø© Ø§Ù„Ø¨Ø·Ø¡)
                 Thread.Sleep(2);
             }
         }
 
-        // ÇáãÎÊÈÑ ÇáÃæá
-        private void btnSinglePixel_Click(object sender, EventArgs e)
+        // Ø§Ù„Ù…Ø®ØªØ¨Ø± Ø§Ù„Ø£ÙˆÙ„
+        private void button1_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -120,7 +114,7 @@ namespace PixelCraft
         }
 
 
-        private void btnFilledSquare_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -144,7 +138,7 @@ namespace PixelCraft
 
         }
 
-        private void btnSquareOutline_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -179,7 +173,7 @@ namespace PixelCraft
             UpdateMetrics("Square Outline");
         }
 
-        private void btnThreeLines_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -211,8 +205,8 @@ namespace PixelCraft
 
 
 
-        // ÇáãÎÊÈÑ ÇáËÇäí
-        private void btnGradientBar_Click(object sender, EventArgs e)
+        // Ø§Ù„Ù…Ø®ØªØ¨Ø± Ø§Ù„Ø«Ø§Ù†ÙŠ
+        private void button8_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -235,7 +229,7 @@ namespace PixelCraft
             UpdateMetrics("Gradient Bar");
         }
 
-        private void btnRgbGradient_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -258,7 +252,7 @@ namespace PixelCraft
             UpdateMetrics("RGB Gradient");
         }
 
-        private void btnSimpleSlope_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -281,7 +275,7 @@ namespace PixelCraft
             UpdateMetrics("Simple Slope");
         }
 
-        private void btnSteepSlope_Click(object sender, EventArgs e)
+        private void button7_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -309,7 +303,7 @@ namespace PixelCraft
             UpdateMetrics("Steep Slope");
         }
 
-        // ÇáãÎÊÈÑ ÇáËÇáË
+        // Ø§Ù„Ù…Ø®ØªØ¨Ø± Ø§Ù„Ø«Ø§Ù„Ø«
         private void RunDDA(int x1, int y1, int x2, int y2, Color color)
         {
             float dx = x2 - x1;
@@ -336,7 +330,7 @@ namespace PixelCraft
             }
         }
 
-        private void btnDdaLine_Click(object sender, EventArgs e)
+        private void button12_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -376,7 +370,7 @@ namespace PixelCraft
             }
         }
 
-        private void btnBresenhamLine_Click(object sender, EventArgs e)
+        private void button10_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -390,7 +384,7 @@ namespace PixelCraft
             UpdateMetrics("Bresenham Line");
         }
 
-        private void btnTriangleDda_Click(object sender, EventArgs e)
+        private void button9_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -430,7 +424,7 @@ namespace PixelCraft
             }
         }
 
-        private void btnHouse_Click(object sender, EventArgs e)
+        private void button11_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -455,7 +449,7 @@ namespace PixelCraft
             UpdateMetrics("House");
         }
 
-        // ÇáãÎÊÈÑ ÇáÑÇÈÚ
+        // Ø§Ù„Ù…Ø®ØªØ¨Ø± Ø§Ù„Ø±Ø§Ø¨Ø¹
         private void Draw8Points(int xc, int yc, int x, int y, Color color)
         {
             void SafeSet(int sx, int sy)
@@ -497,7 +491,7 @@ namespace PixelCraft
             }
         }
 
-        private void btnStandardCircle_Click(object sender, EventArgs e)
+        private void button16_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -524,7 +518,7 @@ namespace PixelCraft
             UpdateMetrics("Standard Circle");
         }
 
-        private void btnPolarCircle_Click(object sender, EventArgs e)
+        private void button14_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -550,7 +544,7 @@ namespace PixelCraft
             UpdateMetrics("Polar Circle");
         }
 
-        private void btnMidpointCircle_Click(object sender, EventArgs e)
+        private void button13_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -565,7 +559,7 @@ namespace PixelCraft
             UpdateMetrics("Midpoint Circle");
         }
 
-        private void btnFace_Click(object sender, EventArgs e)
+        private void button15_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -589,21 +583,21 @@ namespace PixelCraft
             UpdateMetrics("Face");
         }
 
-        // ============= ÇáãÎÊÈÑ ÇáÎÇãÓ ================
+        // ============= Ø§Ù„Ù…Ø®ØªØ¨Ø± Ø§Ù„Ø®Ø§Ù…Ø³ ================
         //overload for triangle
         void DrawShape(Point p1, Point p2, Point p3, Color c)
         {
-            RunDDA(p1.X, p1.Y, p2.X, p2.Y, Color.Green); // ÇáÖáÚ ÇÃáæá 
-            RunDDA(p2.X, p2.Y, p3.X, p3.Y, Color.Green); // ÇáÖáÚ ÇáËÇäí 
-            RunDDA(p3.X, p3.Y, p1.X, p1.Y, Color.Green); //  ÇáÖáÚ ÇáËÇáË 
+            RunDDA(p1.X, p1.Y, p2.X, p2.Y, Color.Green); // Ø§Ù„Ø¶Ù„Ø¹ Ø§Ø£Ù„ÙˆÙ„ 
+            RunDDA(p2.X, p2.Y, p3.X, p3.Y, Color.Green); // Ø§Ù„Ø¶Ù„Ø¹ Ø§Ù„Ø«Ø§Ù†ÙŠ 
+            RunDDA(p3.X, p3.Y, p1.X, p1.Y, Color.Green); //  Ø§Ù„Ø¶Ù„Ø¹ Ø§Ù„Ø«Ø§Ù„Ø« 
         }
         // overload for quadrilateral 
         void DrawShape(Point p1, Point p2, Point p3, Point p4, Color c)
         {
-            RunDDA(p1.X, p1.Y, p2.X, p2.Y, Color.Red); // ÇáÖáÚ ÇÃáæá 
-            RunDDA(p2.X, p2.Y, p3.X, p3.Y, Color.Red); // ÇáÖáÚ ÇáËÇäí 
-            RunDDA(p3.X, p3.Y, p4.X, p4.Y, Color.Red); //  ÇáÖáÚ ÇáËÇáË 
-            RunDDA(p4.X, p4.Y, p1.X, p1.Y, Color.Red); //  ÇáÖáÚ ÇáÑÇÈÚ
+            RunDDA(p1.X, p1.Y, p2.X, p2.Y, Color.Red); // Ø§Ù„Ø¶Ù„Ø¹ Ø§Ø£Ù„ÙˆÙ„ 
+            RunDDA(p2.X, p2.Y, p3.X, p3.Y, Color.Red); // Ø§Ù„Ø¶Ù„Ø¹ Ø§Ù„Ø«Ø§Ù†ÙŠ 
+            RunDDA(p3.X, p3.Y, p4.X, p4.Y, Color.Red); //  Ø§Ù„Ø¶Ù„Ø¹ Ø§Ù„Ø«Ø§Ù„Ø« 
+            RunDDA(p4.X, p4.Y, p1.X, p1.Y, Color.Red); //  Ø§Ù„Ø¶Ù„Ø¹ Ø§Ù„Ø±Ø§Ø¨Ø¹
         }
 
         void DrawShape(Color c, params Point[] points)
@@ -612,18 +606,18 @@ namespace PixelCraft
             pixelCount = 0;
             ClearCanvas();
 
-            // ÇáÊÃßÏ Ãä ÇáäŞÇØ Úáì ÇáÃŞá 3 áÑÓã Ôßá ãÛáŞ
+            // Ø§Ù„ØªØ£ÙƒØ¯ Ø£Ù† Ø§Ù„Ù†Ù‚Ø§Ø· Ø¹Ù„Ù‰ Ø§Ù„Ø£Ù‚Ù„ 3 Ù„Ø±Ø³Ù… Ø´ÙƒÙ„ Ù…ØºÙ„Ù‚
             if (points.Length < 3) return;
 
             for (int i = 0; i < points.Length; i++)
             {
-                // ÇáäŞØÉ ÇáÍÇáíÉ
+                // Ø§Ù„Ù†Ù‚Ø·Ø© Ø§Ù„Ø­Ø§Ù„ÙŠØ©
                 Point current = points[i];
 
-                // ÇáäŞØÉ ÇáÊÇáíÉ (æÅĞÇ æÕáäÇ áÂÎÑ äŞØÉ¡ äÑÈØåÇ ÈÃæá äŞØÉ ÍÊì íÛáŞ ÇáÔßá)
+                // Ø§Ù„Ù†Ù‚Ø·Ø© Ø§Ù„ØªØ§Ù„ÙŠØ© (ÙˆØ¥Ø°Ø§ ÙˆØµÙ„Ù†Ø§ Ù„Ø¢Ø®Ø± Ù†Ù‚Ø·Ø©ØŒ Ù†Ø±Ø¨Ø·Ù‡Ø§ Ø¨Ø£ÙˆÙ„ Ù†Ù‚Ø·Ø© Ø­ØªÙ‰ ÙŠØºÙ„Ù‚ Ø§Ù„Ø´ÙƒÙ„)
                 Point next = points[(i + 1) % points.Length];
 
-                // ÇÓÊÏÚÇÁ ÏÇáÉ ÇáÑÓã ãÇáÊß
+                // Ø§Ø³ØªØ¯Ø¹Ø§Ø¡ Ø¯Ø§Ù„Ø© Ø§Ù„Ø±Ø³Ù… Ù…Ø§Ù„ØªÙƒ
                 RunDDA(current.X, current.Y, next.X, next.Y, c);
                 pixelCount++;
             }
@@ -632,7 +626,7 @@ namespace PixelCraft
             drawTimer.Stop();
             UpdateMetrics($"Shape with {points.Length} points");
         }
-        private void btnShapeFunction_Click(object sender, EventArgs e)
+        private void button20_Click(object sender, EventArgs e)
         {
             drawTimer.Restart();
             pixelCount = 0;
@@ -659,6 +653,13 @@ namespace PixelCraft
             pictureBox1.Refresh();
             drawTimer.Stop();
             UpdateMetrics("Shapes");
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            // Start car movement (same as Start button)
+            EnsureTimer();
+            timer1.Start();
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -709,7 +710,7 @@ namespace PixelCraft
             pictureBox1.Refresh();
         }
 
-        private void btnClearCanvas_Click(object sender, EventArgs e)
+        private void button17_Click(object sender, EventArgs e)
         {
             ClearCanvas();
             lblMetrics.Text = "Ready";
@@ -717,17 +718,17 @@ namespace PixelCraft
 
         }
 
-        private void btnDrawPortrait_Click(object sender, EventArgs e)
+        private void btnDrawPortrait_Click_Click(object sender, EventArgs e)
         {
-            // ÊäÙíİ ÇáÔÇÔÉ ßãÇ ÊİÚá İí ÈÇŞí ÇáãÎÊÈÑÇÊ
+            // ØªÙ†Ø¸ÙŠÙ Ø§Ù„Ø´Ø§Ø´Ø© ÙƒÙ…Ø§ ØªÙØ¹Ù„ ÙÙŠ Ø¨Ø§Ù‚ÙŠ Ø§Ù„Ù…Ø®ØªØ¨Ø±Ø§Øª
             ClearCanvas();
             pixelCount = 0;
             drawTimer.Restart();
 
-            // ÅäÔÇÁ ÇáßáÇÓ ÇáÌÏíÏ æÊãÑíÑ ÇáİæÑã æÏÇáÉ ÇáÊÃÎíÑ
+            // Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„ÙƒÙ„Ø§Ø³ Ø§Ù„Ø¬Ø¯ÙŠØ¯ ÙˆØªÙ…Ø±ÙŠØ± Ø§Ù„ÙÙˆØ±Ù… ÙˆØ¯Ø§Ù„Ø© Ø§Ù„ØªØ£Ø®ÙŠØ±
             PortraitRenderer renderer = new PortraitRenderer(this, ApplyDelay);
 
-            // ÊÃßÏ ãä æÖÚ ãÓÇÑ ÇáÕæÑÉ ÇáÕÍíÍ åäÇ
+            // ØªØ£ÙƒØ¯ Ù…Ù† ÙˆØ¶Ø¹ Ù…Ø³Ø§Ø± Ø§Ù„ØµÙˆØ±Ø© Ø§Ù„ØµØ­ÙŠØ­ Ù‡Ù†Ø§
             renderer.DrawPortraitSlowly(@"D:\PixelCraft\img\1.jpg");
 
             // copy the count from renderer to form-level pixelCount for metrics
@@ -737,10 +738,10 @@ namespace PixelCraft
             UpdateMetrics("Portrait Drawing");
         }
 
-        private void btnPentagon_Click(object sender, EventArgs e)
+        private void button18_Click(object sender, EventArgs e)
         {
 
-            // ÑÓã Ôßá ÎãÇÓí (5 äŞÇØ)
+            // Ø±Ø³Ù… Ø´ÙƒÙ„ Ø®Ù…Ø§Ø³ÙŠ (5 Ù†Ù‚Ø§Ø·)
             DrawShape(Color.Red,
                 new Point(200, 100),
                 new Point(300, 150),
@@ -749,9 +750,9 @@ namespace PixelCraft
                 new Point(100, 150));
         }
 
-        private void btnHexagon_Click(object sender, EventArgs e)
+        private void button19_Click(object sender, EventArgs e)
         {
-            // ÑÓã Ôßá ÓÏÇÓí (6 äŞÇØ)
+            // Ø±Ø³Ù… Ø´ÙƒÙ„ Ø³Ø¯Ø§Ø³ÙŠ (6 Ù†Ù‚Ø§Ø·)
             DrawShape(Color.Red,
                     new Point(150, 100),
                     new Point(250, 100),
@@ -761,129 +762,134 @@ namespace PixelCraft
                     new Point(100, 150));
         }
         PointF[] myShape = new PointF[3];
+        private System.Windows.Forms.Timer timer1;
+        private float carTx = 5f;
+        private int timerIntervalMs = 50;
         private void DrawMyShape()
         {
-            using (Graphics g = Graphics.FromImage(bmp))
+            Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            Graphics g = Graphics.FromImage(bmp);
+
+            g.Clear(Color.White);
+
+            g.DrawPolygon(Pens.Blue, myShape);
+
+            pictureBox1.Image = bmp; // Ø§ÙƒØªØ¨ Ø§Ø³Ù…  Ø§Ù„Ø¨ÙƒØ¬Ø± Ø¨ÙˆÙƒØ³ Ø§Ù„Ø®Ø§Øµ Ø¨Ùƒ 
+        }
+
+        private void EnsureTimer()
+        {
+            if (timer1 != null) return;
+            timer1 = new System.Windows.Forms.Timer();
+            timer1.Interval = timerIntervalMs; // 50 ms
+            timer1.Tick += Timer1_Tick;
+        }
+
+        private void Timer1_Tick(object? sender, EventArgs e)
+        {
+            float tx = carTx; // move 5 pixels each tick
+            myShape[0].X += tx;
+            myShape[1].X += tx;
+            myShape[2].X += tx;
+
+            // wrap-around if shape goes outside the right edge
+            float maxX = Math.Max(Math.Max(myShape[0].X, myShape[1].X), myShape[2].X);
+            if (maxX > pictureBox1.Width)
             {
-                g.Clear(Color.White);
+                // move back to left side
+                float minX = Math.Min(Math.Min(myShape[0].X, myShape[1].X), myShape[2].X);
+                float shift = -minX - 20; // add margin
+                myShape[0].X += shift;
+                myShape[1].X += shift;
+                myShape[2].X += shift;
             }
 
-            DrawCar(carX, carY);
-
-            pictureBox1.Image = bmp;
-            pictureBox1.Refresh();
+            DrawMyShape();
         }
-        private void btnDrawCar_Click(object sender, EventArgs e)
+
+        private void buttonStartCar_Click(object sender, EventArgs e)
         {
-            DrawCar(100, 100);
-            carScale = 1.0f;
-            carX = 100;
-            carY = 100;
+            EnsureTimer();
+            timer1.Start();
+        }
+
+        private void buttonStopCar_Click(object sender, EventArgs e)
+        {
+            EnsureTimer();
+            timer1.Stop();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            myShape[0] = new PointF(50, 50);   //  Ø§Ù„Ù†Ù‚Ø·Ø© Ø§Ø£Ù„ÙˆÙ„Ù‰ 
+            myShape[1] = new PointF(150, 50);  //  Ø§Ù„Ù†Ù‚Ø·Ø© Ø§Ù„Ø«Ø§Ù†ÙŠØ© 
+            myShape[2] = new PointF(100, 150); // )Ø§Ù„Ù†Ù‚Ø·Ø© Ø§Ù„Ø«Ø§Ù„Ø«Ø© (Ø§Ù„Ø±Ø£Ø³  Ø§Ù„Ø³ÙÙ„ÙŠ 
 
-
-        }
-
-        private void DrawCar(int offsetX, int offsetY)
-        {
-            ClearCanvas();
-
-            float s = carScale;
-
-            // ÌÓã ÇáÓíÇÑÉ
-            RunDDA((int)(50 * s + offsetX), (int)(200 * s + offsetY), (int)(200 * s + offsetX), (int)(200 * s + offsetY), Color.Black);
-            RunDDA((int)(200 * s + offsetX), (int)(200 * s + offsetY), (int)(200 * s + offsetX), (int)(250 * s + offsetY), Color.Black);
-            RunDDA((int)(200 * s + offsetX), (int)(250 * s + offsetY), (int)(50 * s + offsetX), (int)(250 * s + offsetY), Color.Black);
-            RunDDA((int)(50 * s + offsetX), (int)(250 * s + offsetY), (int)(50 * s + offsetX), (int)(200 * s + offsetY), Color.Black);
-
-            // ÇáÓŞİ
-            RunDDA((int)(80 * s + offsetX), (int)(200 * s + offsetY), (int)(110 * s + offsetX), (int)(160 * s + offsetY), Color.Black);
-            RunDDA((int)(110 * s + offsetX), (int)(160 * s + offsetY), (int)(160 * s + offsetX), (int)(160 * s + offsetY), Color.Black);
-            RunDDA((int)(160 * s + offsetX), (int)(160 * s + offsetY), (int)(190 * s + offsetX), (int)(200 * s + offsetY), Color.Black);
-
-            // ÇáÚÌáÇÊ
-            RunMidpointCircle((int)(90 * s + offsetX), (int)(260 * s + offsetY), (int)(20 * s), Color.Blue);
-            RunMidpointCircle((int)(160 * s + offsetX), (int)(260 * s + offsetY), (int)(20 * s), Color.Blue);
-
-            pictureBox1.Image = bmp;
-            pictureBox1.Refresh();
-        }
-
-        private void btnTranslateRight_Click(object sender, EventArgs e)
-        {
-            carX += 20;
             DrawMyShape();
         }
 
-        private void btnTranslateDown_Click(object sender, EventArgs e)
+        private void button23_Click(object sender, EventArgs e)
         {
-            int ty = 10;
-            carY += ty;   // äÍÑß ááÃÓİá
-            DrawMyShape(); // ÅÚÇÏÉ ÑÓã ÇáÓíÇÑÉ ÈÇáãæŞÚ ÇáÌÏíÏ
-        }
+            float tx = 20;
+            myShape[0].X += tx;
+            myShape[1].X += tx;
+            myShape[2].X += tx;
 
-        private void btnTranslateUp_Click(object sender, EventArgs e)
-        {
-            int ty = 10;
-            carY -= ty;   // äÍÑß ááÃÚáì
-            DrawMyShape(); // ÅÚÇÏÉ ÇáÑÓã
-        }
-
-        private void btnTranslateLeft_Click(object sender, EventArgs e)
-        {
-            carX -= 20;
             DrawMyShape();
         }
 
-
-        private void btnScaleDown_Click(object sender, EventArgs e)
+        private void button25_Click(object sender, EventArgs e)
         {
-
-            if (carScale < 0.2f)
-            {
-                carScale = 0.2f;
-                UpdateMetrics("ßÇİí!!!");
-            }
-            else carScale *= 0.8f;
-
-                DrawMyShape();
-
-            ////            ÇáßæÏÇáŞÏíã ÇáãæÌæÏ ÈÇáãÍÇÖÑÇÊ:
-            //float sx = 0.8f; // )ãÚÇãá ÇáÊÕÛíÑ (20% ÇÕÛÑ 
-            //float sy = 0.8f;
-            //myShape[0].X *= sx;
-            //myShape[0].Y *= sy;
-            //myShape[1].X *= sx;
-            //myShape[1].Y *= sy;
-            //myShape[2].X *= sx;
-            //myShape[2].Y *= sy;
-            //DrawMyShape();
+            float ty = 10;
+            myShape[0].Y += ty;
+            myShape[1].Y += ty;
+            myShape[2].Y += ty;
+            DrawMyShape();
         }
 
-        private void btnScaleUp_Click(object sender, EventArgs e)
+        private void button22_Click(object sender, EventArgs e)
         {
-            if (carScale > 3f) 
-            {
-                carScale = 3f;
-                UpdateMetrics("ÃßÈÑ ãä ÇááÇÒã!!!");
-            }
-
-            else carScale *= 1.2f;
+            float ty = 10;
+            myShape[0].Y -= ty;
+            myShape[1].Y -= ty;
+            myShape[2].Y -= ty;
             DrawMyShape();
+        }
 
-            ////            ÇáßæÏÇáŞÏíã ÇáãæÌæÏ ÈÇáãÍÇÖÑÇÊ:
-            //float sx = 1.2f; // )ãÚÇãá ÇáÊßÈíÑ (20% ÃßÈÑ 
-            //float sy = 1.2f;
-            //myShape[0].X *= sx;
-            //myShape[0].Y *= sy;
-            //myShape[1].X *= sx;
-            //myShape[1].Y *= sy;
-            //myShape[2].X *= sx;
-            //myShape[2].Y *= sy;
-            //DrawMyShape();
+        private void button24_Click(object sender, EventArgs e)
+        {
+            float tx = 20;
+            myShape[0].X -= tx;
+            myShape[1].X -= tx;
+            myShape[2].X -= tx;
+
+            DrawMyShape();
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            float sx = 0.8f; // )Ù…Ø¹Ø§Ù…Ù„ Ø§Ù„ØªØµØºÙŠØ± (20% Ø§ØµØºØ± 
+            float sy = 0.8f;
+            myShape[0].X *= sx;
+            myShape[0].Y *= sy;
+            myShape[1].X *= sx;
+            myShape[1].Y *= sy;
+            myShape[2].X *= sx;
+            myShape[2].Y *= sy;
+            DrawMyShape();
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            float sx = 1.2f; // )Ù…Ø¹Ø§Ù…Ù„ Ø§Ù„ØªÙƒØ¨ÙŠØ± (20% Ø£ÙƒØ¨Ø± 
+            float sy = 1.2f;
+            myShape[0].X *= sx;
+            myShape[0].Y *= sy;
+            myShape[1].X *= sx;
+            myShape[1].Y *= sy;
+            myShape[2].X *= sx;
+            myShape[2].Y *= sy;
+            DrawMyShape();
         }
     }
 }

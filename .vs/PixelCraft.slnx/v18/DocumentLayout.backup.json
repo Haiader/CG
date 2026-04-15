@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "D:\\PixelCraft\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|D:\\PixelCraft\\pixelcraft\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|solutionrelative:pixelcraft\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|d:\\pixelcraft\\pixelcraft\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|solutionrelative:pixelcraft\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|d:\\pixelcraft\\pixelcraft\\portraitrenderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|solutionrelative:pixelcraft\\portraitrenderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|d:\\pixelcraft\\pixelcraft\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{4248C004-18CD-BF06-CA95-80E0E1525432}|PixelCraft\\PixelCraft.csproj|solutionrelative:pixelcraft\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -35,39 +31,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Form1.cs",
+              "Title": "Form1.cs [Design]",
               "DocumentMoniker": "D:\\PixelCraft\\PixelCraft\\Form1.cs",
               "RelativeDocumentMoniker": "PixelCraft\\Form1.cs",
-              "ToolTip": "D:\\PixelCraft\\PixelCraft\\Form1.cs",
-              "RelativeToolTip": "PixelCraft\\Form1.cs",
-              "ViewState": "AgIAANQCAAAAAAAAAAArwDUDAAAAAAAAAAAAAA==",
+              "ToolTip": "D:\\PixelCraft\\PixelCraft\\Form1.cs [Design]*",
+              "RelativeToolTip": "PixelCraft\\Form1.cs [Design]*",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T09:32:51.457Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PortraitRenderer.cs",
-              "DocumentMoniker": "D:\\PixelCraft\\PixelCraft\\PortraitRenderer.cs",
-              "RelativeDocumentMoniker": "PixelCraft\\PortraitRenderer.cs",
-              "ToolTip": "D:\\PixelCraft\\PixelCraft\\PortraitRenderer.cs",
-              "RelativeToolTip": "PixelCraft\\PortraitRenderer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T06:11:58.425Z"
+              "WhenOpened": "2026-04-15T16:18:44.224Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Form1.cs [Design]",
+              "Title": "Form1.cs",
               "DocumentMoniker": "D:\\PixelCraft\\PixelCraft\\Form1.cs",
               "RelativeDocumentMoniker": "PixelCraft\\Form1.cs",
-              "ToolTip": "D:\\PixelCraft\\PixelCraft\\Form1.cs [Design]",
-              "RelativeToolTip": "PixelCraft\\Form1.cs [Design]",
+              "ToolTip": "D:\\PixelCraft\\PixelCraft\\Form1.cs*",
+              "RelativeToolTip": "PixelCraft\\Form1.cs*",
+              "ViewState": "AgIAAFIDAAAAAAAAAAAvwGgDAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-01T08:54:22.015Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2026-04-01T09:32:51.457Z",
+              "EditorCaption": ""
             }
           ]
         }

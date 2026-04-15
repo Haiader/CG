@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PixelCraft")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d893d96252d9cfc84d6c69a4b82fd362136b26a6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be92c372bfb4a92174795d7f1df597cc4f37177b")]
 [assembly: System.Reflection.AssemblyProductAttribute("PixelCraft")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PixelCraft")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

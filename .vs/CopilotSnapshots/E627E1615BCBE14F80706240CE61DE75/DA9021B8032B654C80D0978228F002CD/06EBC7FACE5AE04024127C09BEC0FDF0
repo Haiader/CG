@@ -33,11 +33,8 @@
             label6 = new Label();
             panel1 = new Panel();
             panel2 = new Panel();
-            panel7 = new Panel();
             btnDrawPortrait = new Button();
-            btnClearCanvas = new Button();
             chkSlowMotion = new CheckBox();
-            panel6 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
             btnDrawCar = new Button();
             label7 = new Label();
@@ -65,9 +62,9 @@
             btnMidpointCircle = new Button();
             btnPolarCircle = new Button();
             btnHouse = new Button();
+            btnClearCanvas = new Button();
             panel3 = new Panel();
             panel4 = new Panel();
-            panel8 = new Panel();
             tableLayoutPanel2 = new TableLayoutPanel();
             btnTranslateLeft = new Button();
             btnTranslateUp = new Button();
@@ -76,15 +73,16 @@
             btnScaleDown = new Button();
             btnScaleUp = new Button();
             panel5 = new Panel();
+            panel6 = new Panel();
+            panel7 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
-            panel7.SuspendLayout();
-            panel6.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             panel4.SuspendLayout();
-            panel8.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
+            panel6.SuspendLayout();
+            panel7.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -132,18 +130,6 @@
             panel2.Size = new Size(936, 165);
             panel2.TabIndex = 1;
             // 
-            // panel7
-            // 
-            panel7.Controls.Add(btnDrawPortrait);
-            panel7.Controls.Add(label6);
-            panel7.Controls.Add(btnClearCanvas);
-            panel7.Controls.Add(chkSlowMotion);
-            panel7.Dock = DockStyle.Right;
-            panel7.Location = new Point(736, 0);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(200, 165);
-            panel7.TabIndex = 50;
-            // 
             // btnDrawPortrait
             // 
             btnDrawPortrait.Location = new Point(14, 57);
@@ -154,17 +140,6 @@
             btnDrawPortrait.UseVisualStyleBackColor = true;
             btnDrawPortrait.Click += btnDrawPortrait_Click;
             // 
-            // btnClearCanvas
-            // 
-            btnClearCanvas.Location = new Point(14, 25);
-            btnClearCanvas.Margin = new Padding(3, 2, 3, 2);
-            btnClearCanvas.Name = "btnClearCanvas";
-            btnClearCanvas.Size = new Size(89, 26);
-            btnClearCanvas.TabIndex = 46;
-            btnClearCanvas.Text = "clear";
-            btnClearCanvas.UseVisualStyleBackColor = true;
-            btnClearCanvas.Click += btnClearCanvas_Click;
-            // 
             // chkSlowMotion
             // 
             chkSlowMotion.AutoSize = true;
@@ -174,15 +149,6 @@
             chkSlowMotion.TabIndex = 48;
             chkSlowMotion.Text = "رسم بطيء";
             chkSlowMotion.UseVisualStyleBackColor = true;
-            // 
-            // panel6
-            // 
-            panel6.Controls.Add(tableLayoutPanel1);
-            panel6.Dock = DockStyle.Fill;
-            panel6.Location = new Point(0, 0);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(936, 165);
-            panel6.TabIndex = 49;
             // 
             // tableLayoutPanel1
             // 
@@ -504,6 +470,17 @@
             btnHouse.UseVisualStyleBackColor = true;
             btnHouse.Click += btnHouse_Click;
             // 
+            // btnClearCanvas
+            // 
+            btnClearCanvas.Location = new Point(14, 25);
+            btnClearCanvas.Margin = new Padding(3, 2, 3, 2);
+            btnClearCanvas.Name = "btnClearCanvas";
+            btnClearCanvas.Size = new Size(89, 26);
+            btnClearCanvas.TabIndex = 46;
+            btnClearCanvas.Text = "clear";
+            btnClearCanvas.UseVisualStyleBackColor = true;
+            btnClearCanvas.Click += btnClearCanvas_Click;
+            // 
             // panel3
             // 
             panel3.Dock = DockStyle.Bottom;
@@ -514,7 +491,7 @@
             // 
             // panel4
             // 
-            panel4.Controls.Add(panel8);
+            panel4.Controls.Add(tableLayoutPanel2);
             panel4.Controls.Add(panel5);
             panel4.Controls.Add(panel3);
             panel4.Dock = DockStyle.Right;
@@ -522,15 +499,6 @@
             panel4.Name = "panel4";
             panel4.Size = new Size(307, 542);
             panel4.TabIndex = 0;
-            // 
-            // panel8
-            // 
-            panel8.Controls.Add(tableLayoutPanel2);
-            panel8.Dock = DockStyle.Fill;
-            panel8.Location = new Point(0, 353);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(307, 24);
-            panel8.TabIndex = 5;
             // 
             // tableLayoutPanel2
             // 
@@ -545,13 +513,13 @@
             tableLayoutPanel2.Controls.Add(btnScaleDown, 0, 2);
             tableLayoutPanel2.Controls.Add(btnScaleUp, 2, 2);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(0, 0);
+            tableLayoutPanel2.Location = new Point(0, 225);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 3;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel2.Size = new Size(307, 24);
+            tableLayoutPanel2.Size = new Size(307, 152);
             tableLayoutPanel2.TabIndex = 4;
             // 
             // btnTranslateLeft
@@ -561,7 +529,7 @@
             btnTranslateLeft.Location = new Point(3, 3);
             btnTranslateLeft.Name = "btnTranslateLeft";
             tableLayoutPanel2.SetRowSpan(btnTranslateLeft, 2);
-            btnTranslateLeft.Size = new Size(96, 10);
+            btnTranslateLeft.Size = new Size(96, 94);
             btnTranslateLeft.TabIndex = 2;
             btnTranslateLeft.Text = "⬅";
             btnTranslateLeft.UseVisualStyleBackColor = true;
@@ -573,7 +541,7 @@
             btnTranslateUp.Font = new Font("Segoe UI", 26F);
             btnTranslateUp.Location = new Point(105, 3);
             btnTranslateUp.Name = "btnTranslateUp";
-            btnTranslateUp.Size = new Size(96, 2);
+            btnTranslateUp.Size = new Size(96, 44);
             btnTranslateUp.TabIndex = 0;
             btnTranslateUp.Text = "⬆";
             btnTranslateUp.UseVisualStyleBackColor = true;
@@ -583,9 +551,9 @@
             // 
             btnTranslateDown.Dock = DockStyle.Fill;
             btnTranslateDown.Font = new Font("Segoe UI", 26F);
-            btnTranslateDown.Location = new Point(105, 11);
+            btnTranslateDown.Location = new Point(105, 53);
             btnTranslateDown.Name = "btnTranslateDown";
-            btnTranslateDown.Size = new Size(96, 2);
+            btnTranslateDown.Size = new Size(96, 44);
             btnTranslateDown.TabIndex = 3;
             btnTranslateDown.Text = "⬇";
             btnTranslateDown.UseVisualStyleBackColor = true;
@@ -598,7 +566,7 @@
             btnTranslateRight.Location = new Point(207, 3);
             btnTranslateRight.Name = "btnTranslateRight";
             tableLayoutPanel2.SetRowSpan(btnTranslateRight, 2);
-            btnTranslateRight.Size = new Size(97, 10);
+            btnTranslateRight.Size = new Size(97, 94);
             btnTranslateRight.TabIndex = 1;
             btnTranslateRight.Text = "➡️";
             btnTranslateRight.UseVisualStyleBackColor = true;
@@ -608,9 +576,9 @@
             // 
             btnScaleDown.Dock = DockStyle.Fill;
             btnScaleDown.Font = new Font("Segoe UI", 26F);
-            btnScaleDown.Location = new Point(3, 19);
+            btnScaleDown.Location = new Point(3, 103);
             btnScaleDown.Name = "btnScaleDown";
-            btnScaleDown.Size = new Size(96, 2);
+            btnScaleDown.Size = new Size(96, 46);
             btnScaleDown.TabIndex = 2;
             btnScaleDown.Text = "-";
             btnScaleDown.UseVisualStyleBackColor = true;
@@ -620,9 +588,9 @@
             // 
             btnScaleUp.Dock = DockStyle.Fill;
             btnScaleUp.Font = new Font("Segoe UI", 26F);
-            btnScaleUp.Location = new Point(207, 19);
+            btnScaleUp.Location = new Point(207, 103);
             btnScaleUp.Name = "btnScaleUp";
-            btnScaleUp.Size = new Size(97, 2);
+            btnScaleUp.Size = new Size(97, 46);
             btnScaleUp.TabIndex = 1;
             btnScaleUp.Text = "+";
             btnScaleUp.UseVisualStyleBackColor = true;
@@ -633,8 +601,29 @@
             panel5.Dock = DockStyle.Top;
             panel5.Location = new Point(0, 0);
             panel5.Name = "panel5";
-            panel5.Size = new Size(307, 353);
+            panel5.Size = new Size(307, 225);
             panel5.TabIndex = 0;
+            // 
+            // panel6
+            // 
+            panel6.Controls.Add(tableLayoutPanel1);
+            panel6.Dock = DockStyle.Fill;
+            panel6.Location = new Point(0, 0);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(936, 165);
+            panel6.TabIndex = 49;
+            // 
+            // panel7
+            // 
+            panel7.Controls.Add(btnDrawPortrait);
+            panel7.Controls.Add(label6);
+            panel7.Controls.Add(btnClearCanvas);
+            panel7.Controls.Add(chkSlowMotion);
+            panel7.Dock = DockStyle.Right;
+            panel7.Location = new Point(736, 0);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(200, 165);
+            panel7.TabIndex = 50;
             // 
             // Form1
             // 
@@ -656,20 +645,19 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
-            panel7.ResumeLayout(false);
-            panel7.PerformLayout();
-            panel6.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             panel4.ResumeLayout(false);
-            panel8.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
+            panel6.ResumeLayout(false);
+            panel7.ResumeLayout(false);
+            panel7.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        internal PictureBox pictureBox1;
+        private PictureBox pictureBox1;
         private Label label6;
         private Panel panel1;
         private Panel panel2;
@@ -742,6 +730,5 @@
         private TableLayoutPanel tableLayoutPanel2;
         private Panel panel7;
         private Panel panel6;
-        private Panel panel8;
     }
 }
